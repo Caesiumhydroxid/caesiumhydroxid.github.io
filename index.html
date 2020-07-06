@@ -1,3 +1,54 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Loading...</title>
+    <meta id="desktopMeta" name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=2.5, user-scalable=yes" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+    <script type="text/javascript" src="/course/javax.faces.resource/deltaspike/windowhandler.js.xhtml"></script>
+
+    <link rel="apple-touch-icon" href="/static/2.6.3/global/images/mobile/apple-touch-icon-precomposed.png"/>
+    <link href="/static/2.6.3/global/css/reset.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="basic.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/2.6.3/global/css/content.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/2.6.3/global/css/mobile.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/course/javax.faces.resource/css/loading-animation.css.xhtml" rel="stylesheet" type="text/css" media="all"/>
+    <style>
+        #buffer {
+            position: absolute;
+            left: 50%;
+            top: 16em;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%); }
+
+        @media only screen and (max-width: 949px) {
+            #buffer {
+                top: 8em;
+            }
+        }
+
+        .loadingImage {
+            height: 100px;
+        }
+
+        .css-animated {
+            display: none;
+        }
+
+        @supports (animation-name: test) or (-webkit-animation-name: test) {
+            .css-animated {
+                display: initial;
+            }
+            .gif-animated {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="lehre de loading">
 <script type="text/javascript"> myfaces.config._autoeval = true; </script>
         <div id="glow_left"></div>
         <div id="glow_right"></div>
@@ -277,21 +328,15 @@
                     <div id="footerShadow-left"></div>
                     <div id="footerShadow-right"></div>
                     <div id="baseLinks">
-                        <a href="/hilfe?pfad=support">Support</a>
+                        <a href="">Support</a>
                         |
-                        <a href="https://www.it.tuwien.ac.at/regelungen/" target="_blank">Policies</a>
+                        <a href="" target="_blank">Policies</a>
                         |
-                        <a href="/ueber_tiss/impressum">Impressum</a>
+                        <a href="">Impressum</a>
                         |
-                        <a href="/ueber_tiss/datenschutz">Datenschutz</a>
-                    <span class="mobileToggles" style=""> | <a href="javascript:;" class="mobileToggle" style="display: none;">Mobile Version</a><a href="javascript:;" class="mobileToggle">Desktop Version</a></span></div>
-                    <div id="legalInfo">
-                        <p>
-                            Technische Universität Wien – Karlsplatz 13 | A-1040 Wien | Tel. +43/(0)1/58801-0 | Fax +43/(0)1/58801-41099
-                            <br><span class="versionInfo"></span>
-                        </p>
-                    </div>
+                        <a href="">Datenschutz</a>
                 </div>
             </div>
         </div><script type="text/javascript" src="/static/2.6.3/global/js/busyCursor.js"></script><script type="text/javascript">(function(){dswh.init('7941','CLIENTWINDOW',10,{'tokenizedRedirect':false,'storeWindowTreeOnLinkClick':false,'storeWindowTreeOnButtonClick':false});})();</script>
 <div id="textarea_simulator" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div><div class="ui-dialog-docking-zone"></div>
+</body>
