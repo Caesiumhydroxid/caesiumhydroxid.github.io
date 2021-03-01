@@ -1,0 +1,100 @@
+# WhatATheme
+markdown: kramdown
+
+# URL of the Site
+url: '192.168.8.136'
+# Base URL of the Site (i.e., Name of the Repository in which the Site is hosted)
+baseurl: 
+
+# Title of the Site
+title: Portfolio
+# Description of the Site
+description: Projects created by Jonas Bodingbauer
+# URL of Image of the Site
+site-image: 
+# Keywords of the Site
+site-keywords: Site, Template, Theme
+# URL for the Image of custom Favicon
+favicon-url: 
+
+front-video: /assets/videos/FrontVideo.webm
+# Social Media and Contact
+# If you don't want to use any icon, you can leave them blank.
+email:
+facebook_username: 
+twitter_username: Caesiumhydroxid
+instagram_username: 
+linkedin_username: 
+github_username:  
+youtube_channel_id: UCx-6y_BPJhfca3HvH6zWxVw
+reddit_username: 
+behance_username: 
+dribbble_username: 
+spotify_username: 
+
+# Google Analytics
+google-analytics: 
+
+# Disqus
+disqus-shortname: 
+
+# Name of the Author
+author-name: Jonas Bodingbauer
+# URL for the Image of the Author
+author-image: /assets/images/ProfilePicture.JPG
+# 60 Words About the Author
+author-about: I consider myself to be a Maker. I am passionate about electronics, informatics and<a href="https://en.wikipedia.org/wiki/STEAM_fields">STEAM</a>. When I find time to work on projects I love to build things out of old technlogies trying to put new life into them, as well as exploring interesting ideas. Currently I am studying EE as well as Software Engineering at TU Wien  
+# URL to the Author's Profile (i.e., Github, Twitter, Stackoverflow, etc)
+author-url: 
+
+# SASS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Build settings
+plugins:
+  - jekyll-admin
+  - jekyll-feed
+  - jekyll-compress-images
+
+# Compress Images
+compress_images:
+  images_path: "assets/images/**/*.{gif,png,jpg,jpeg,svg}"
+
+# Permalink
+permalink: "blog/:title"
+
+# Compress
+compress_html:
+  clippings: all
+
+# Defaults
+defaults:
+  -
+    scope:
+      type: 'posts'
+    values:
+      layout: post
+      post-image: ""
+      description: ""
+      tags:
+        - ""
+  -
+    scope:
+      type: 'pages'
+    values:
+      layout: page
+
+# Exclude
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/

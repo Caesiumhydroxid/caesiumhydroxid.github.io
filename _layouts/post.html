@@ -1,0 +1,66 @@
+---
+layout: compress
+---
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+  {% include navbar.html %}
+
+  <section class="hero is-fullheight has-text-centered" id="hero" style="--background-image:url({{page.post-image}});">
+    <video playsinline autoplay muted loop poster="{{page.post-image}}" id="video">
+      <source src="{{page.post-video}}" type="video/webm">
+    </video>
+    <div class="hero-body">
+    
+      <div class="container">
+        <h1 class="title has-text-white is-size-1 is-uppercase has-text-weight-bold">
+          {{page.title}}
+        </h1>
+        <h3 class="subtitle has-text-white-bis is-uppercase has-text-weight-medium is-marginless">
+          {{page.description}}
+        </h3>
+        <hr>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-fullheight has-text-centered" id="post">
+    <div class="hero-body">
+      <div class="container">
+        <div class="content has-text-justified-desktop has-text-justified-fullhd has-text-justified has-text-justified-tablet has-text-left-mobile">
+          <p>{{ content }}</p>
+        </div>
+        {% unless site.disqus-shortname == "" %}
+        <div class="disqus-comments" id="disqus_thread"></div>
+        {% endunless %}
+      </div>
+    </div>
+  </section>
+  {% include footer.html %}
+</body>
+<script>
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function () { /* DON'T EDIT BELOW THIS LINE */
+    var d = document,
+      s = d.createElement('script');
+    s.src = 'https://{{site.disqus-shortname}}.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+</html>

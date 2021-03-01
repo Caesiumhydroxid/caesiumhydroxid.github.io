@@ -1,0 +1,63 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+
+<body>
+  {% include navbar.html %}
+  <script src="assets/js/contactform.js"></script>
+    <section class="hero">
+    <div class="hero-body">
+        <div class="container has-text-centered" id="page-section" style="padding-top: 5em;">
+            <h1> Contact Form: </h1>
+            <form action="https://app.99inbound.com/api/e/-xSs64rn" onsubmit="submitFunction();" target="_self" method="post">
+                <div class="field">
+                    <label for="name" class="label is-size-4 has-text-weight-light"></label>
+                    <div class="control has-icons-left">
+                        <input type="text" name="name" id="name" class="input" placeholder="Name" autofocus>
+                            <span class="icon is-left">
+                                <i class="fa fa-user"></i>
+                            </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email" class="label is-size-4 has-text-weight-light"></label>
+                    <div class="control has-icons-left">
+                        <input type="email" name="email" id='inputEmailField' class="input" placeholder="Email" onchange="validateEmail(event.target.value)">
+                            <span class="icon is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i id='emailCheckIcon' class="fas fa-exclamation-triangle"></i>
+                            </span>
+                            <p id="emailActionHint" class="help is-danger">Please enter a valid email-address</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="message" class="label is-size-4 has-text-weight-light"></label>
+                    <textarea name="message" id="message" rows="5" class="textarea is-medium" placeholder="Message"></textarea>
+                </div>
+                <div style="position: absolute; left: -5000px;">
+                    <input type="checkbox" name="stupendous_jade_matte_jacket" value="1" tabindex="-1" autocomplete="no">
+                </div>
+                <button type="submit" id="submitbutton" class="button is-success is-size-5" disabled>Submit</button>
+            </form>
+        </div>
+    </div>
+    </section>
+    <section class="hero is-success" style="display: none;" id="success-contact">
+        <div class="hero-body">
+          <p class="title">
+            Your message is sending
+          </p>
+          <p class="subtitle">
+              You will be directed to the title page in a few moments.
+          </p>
+        </div>
+        </section>
+  {% include footer.html %}
+</body>
+
+</html>
