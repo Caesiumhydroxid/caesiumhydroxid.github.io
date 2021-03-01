@@ -18,6 +18,8 @@ site-keywords: Site, Template, Theme
 favicon-url: 
 
 front-video: /assets/videos/FrontVideo.webm
+
+front-image: /assets/images/FlipdotClock.jpg
 # Social Media and Contact
 # If you don't want to use any icon, you can leave them blank.
 email:
