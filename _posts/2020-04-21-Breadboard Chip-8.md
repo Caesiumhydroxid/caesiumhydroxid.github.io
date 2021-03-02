@@ -1,7 +1,7 @@
 ---
 title: Breadboard Chip-8
 layout: post
-post-image: "/assets/images/Chip8/FullCPU.JPG"
+post-image: "/assets/images/Chip8/FullCPU.jpg"
 post-video: "/assets/videos/Chip8.webm"
 description: A CPU on a Breadboard
 tags:
@@ -35,7 +35,7 @@ The tutorials of [Ben Eater](https://www.youtube.com/c/BenEater/videos) inspired
 This is probably the easiest Module and very similar to the version of Ben Eater - it has an adjustable clock (astable 555) (~100Hz - 20kHz) as well as start and stop circuits. For the development process it also features a single stepping mode which uses a monostable 555 to generate pulses. A double-throw switch is used for program loading mode (which is explained in the RAM module).The last button on there is a reset-button which resets the PC and the microstep counter (inside the control logic).
 
 <figure>
-  <img class="post-image" src="/assets/images/Chip8/ClockAndRAM.JPG"  />
+  <img class="post-image" src="/assets/images/Chip8/ClockAndRAM.jpg"  />
   <figcaption>A closer view of clock, RAM and Program-counter (from top to bottom)</figcaption>
 </figure>
 
@@ -65,7 +65,7 @@ This module also uses a single KM62256 (instead of single register chips for spa
 
 The stack as well as the register I (12 bit Index-Register used for storing addresses) also resides inside the same SRAM (which is a pretty ugly design choice, but it worked). The Stack Pointer is also implemented directly in hardware with a [74HC193](https://assets.nexperia.com/documents/data-sheet/74HC_HCT193.pdf). Using a Multiplexer 74HC157 the Stack Adresses as well as the Register addresses are correctly relayed to the SRAM module. This hardware - stackpointer allows for quicker execution of `RET` and `CALL` instructions.
 <figure>
-  <img class="post-image" src="/assets/images/Chip8/ALUandReg.JPG"  />
+  <img class="post-image" src="/assets/images/Chip8/ALUandReg.jpg"  />
   <figcaption>A closer view of Register A-F, ALU and RNG(from top to bottom)</figcaption>
 </figure>
 
@@ -86,7 +86,7 @@ This was probably the most complex part to develop because the Instructions of C
 
 These issues were solved by using a few multiplexers and generic logic gates. The result of the "pre decoding" is then fed into four parallel flash memory chips [SST39SF02](https://ww1.microchip.com/downloads/en/DeviceDoc/20005022C.pdf) which store the microcode of the CPU. All in all there are 31 control signals which are driven by 21 (partly combined) output bits of these memory chips. Because the microcode also needs something similar like a Program-counter [74HC393](https://www.ti.com/general/docs/suppproductinfo.tsp?distId=26&gotoUrl=http%3A%2F%2Fwww.ti.com%2Flit%2Fgpn%2Fsn74hc393) was used to keep track of the position in the microcode. Because of some quite hard to implement instructions like `Fx65` - "Read registers V0 through Vx from memory starting at location I" (I is the Index-register) this counter was designed to count up to 64. The longest Instructions `Fx65` and `Fx55` use a whopping **46** microsteps to complete. This is not typical at all - most instructions use somewhere around 6 microsteps (including 2 steps for fetching the instruction).
 <figure>
-  <img class="post-image" src="/assets/images/Chip8/ControlBitsAndRNG.JPG"  />
+  <img class="post-image" src="/assets/images/Chip8/ControlBitsAndRNG.jpg"  />
   <figcaption>The state of all control-signals is indicated with Led's </figcaption>
 </figure>
 

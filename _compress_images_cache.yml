@@ -2,6 +2,7 @@
 assets/images/DieEntscheidungKrankenhaus.png: DieEntscheidungKrankenhaus.png
 assets/images/FlipdotClockSideView.jpg: FlipdotClockSideView.jpg
 assets/images/FlipdotClockDriver.jpg: FlipdotClockDriver.jpg
+assets/images/ProfilePicture.JPG: ProfilePicture.JPG
 assets/images/DieEntscheidungChar.png: DieEntscheidungChar.png
 assets/images/FlipdotClock.jpg: FlipdotClock.jpg
 assets/images/FlipdotClockBackside.jpg: FlipdotClockBackside.jpg
@@ -10,5 +11,12 @@ assets/images/Chip8Description.jpeg: Chip8Description.jpeg
 assets/images/logo.png: logo.png
 assets/images/Die_EntscheidungJonasBodingbauer.jpg: Die_EntscheidungJonasBodingbauer.jpg
 assets/images/DieEntscheidungPark.png: DieEntscheidungPark.png
+assets/images/Chip8/ALU.jpg: ALU.jpg
 assets/images/Chip8/CPUWhole.jpg: CPUWhole.jpg
+assets/images/Chip8/ClockAndRAM.jpg: ClockAndRAM.jpg
+assets/images/Chip8/ALUandReg.jpg: ALUandReg.jpg
+assets/images/Chip8/ControlBitsAndRNG.jpg: ControlBitsAndRNG.jpg
+assets/images/Chip8/ControlLogic.jpg: ControlLogic.jpg
+assets/images/Chip8/FullCPU.jpg: FullCPU.jpg
+assets/images/Chip8/Control.jpg: Control.jpg
 assets/images/DieEntscheidungHome.png: DieEntscheidungHome.png
