@@ -9,7 +9,7 @@ tags:
 
 # Description
 
-This project is largely inspired by the [2D stepper motor](https://hackaday.io/project/164507-2d-stepper-motor-etched-on-pcb-micro-manipulator) from [bobricius](https://hackaday.io/bobricius) on hackaday. I loved the concept and thought I could make a Pong game from it. Little did I know that driving and designing this thing would result in lots of tinkering and head scratching but in the end I got my first (and only) PCB to work the way I wanted.
+This project is largely inspired by the [2D stepper motor](https://hackaday.io/project/164507-2d-stepper-motor-etched-on-pcb-micro-manipulator) from [bobricius](https://hackaday.io/bobricius) on hackaday. I loved the concept and thought I could make a Pong game from it. Little did I know that driving and designing this thing would result in lots of headscratching and tinkering but in the end everything worked as I imageined.
 
 # Design
 
@@ -43,16 +43,16 @@ In a redesign, because of the lessons I learned from this prototype, I would obv
 The software of the STM32 is written using the [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) which was quite new for me as I mainly used ATmega controllers before. The abstraction from the hardware had a lot of pitfalls for me in the beginning, but I quickly learned to appreciate it. I used lots of timers for all the PWM as well as controlling the game.
 When I could finally control the ball in a more or less reliable way (dust or other contamination sometimes make it lose a step) writing the game was quite straightforward. 
 But until I managed to get the ball to behave I needed to go through quite a lot of things:
-1. controlling the x-Axis (top-side)
+1. controlling the x-axis (top-side)
 2. almost frying my H-bridges in the process
-3. try adding the y-Axis
-4. losing steps all the time on the y-Axis
+3. try adding the y-axis
+4. losing steps all the time on the y-axis
 5. almost frying my H-bridges again
 6. adding PWM to x and y
-7. noticing that drastically reducing current (though PWM) on the x-Axis helped a lot as friction decreased
+7. noticing that drastically reducing current (through PWM) on the x-axis helped a lot as friction decreased
 8. tuning maximum step speed, PWM phase angles, PWM frequency,...
 
-After a lot of debugging I finally ended up with a quite functional version for controlling the ball - controlling the paddles was "a walk in the park" comparatively, since they only had traces on the top layer.
+After a lot of debugging I finally ended up with a quite functional version for controlling the ball. Controlling the paddles was "a walk in the park" comparatively, since they only had traces on the top layer.
 
 ## Gamemodes
 Obviously there is a **two player** mode letting them compete. The first person to achieve 4 points wins. The points are displayed in binary format using LEDs on the bottom of the PCB.

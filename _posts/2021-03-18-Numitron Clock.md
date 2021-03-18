@@ -9,7 +9,7 @@ tags:
 
 # Description
 
-This Clock is built with [IV-9 Numitrons](http://www.tube-tester.com/sites/nixie/data/IV-9/iv-9.htm). They operate on voltages around 3-4V and take a driving current of approximately 20mA per Segment. There is no PCB used in this project and even the drivers in a SOP-Packages are soldered directly to copper wire.
+This Clock is built with [IV-9 Numitrons](http://www.tube-tester.com/sites/nixie/data/IV-9/iv-9.htm). They operate on voltages around 3-4V and take a driving current of approximately 20mA per segment. There is no PCB used in this project - hence freeform - and even the drivers in a SOP-Packages are soldered directly to copper wire.
 
 I was largely inspired by the projects of [Mohit Bhoite](https://www.bhoite.com/) whose work is really amazing. 
 
@@ -18,7 +18,7 @@ All of the wiring is done using 1.5 mm² copper wire for the more stable parts a
 
 # Electronics
 
-On the electronics side this clock is actually not really complicated - an ESP8266 is the brain of the operation. I chose it because it can connect to WIFI and in the future I can potentially use it to also display other numbers / data from the internet. The driving ICs are [STP16DP05MTR](https://www.st.com/resource/en/datasheet/stp16dp05.pdf) constant current LED drivers. This might seem like an awkward choice - but I think that the current limiting capabilities (I set it to about 18mA) are going to enhance the lifetime of my Numitrons - also other high current, open drain shift registers were quite equally priced. I also wasted 8 pins per register, but this made assembly (which was already quite tricky) a little easier.
+On the electronics side this clock is actually not really complicated - an ESP8266 is the brain of the operation. I chose it because it can connect to WIFI and in the future I can potentially use it to also display other numbers / data from the internet. The driving ICs are [STP16DP05MTR](https://www.st.com/resource/en/datasheet/stp16dp05.pdf) constant current LED drivers. This might seem like an awkward choice, but I think that the current limiting capabilities (I set it to about 18mA) are going to enhance the lifetime of my Numitrons. Other high current, open drain shift registers were quite equally priced. I wasted 8 pins per driver, but this made assembly (which was already quite tricky) a lot easier.
 
 The ESP is connected to the daisy-chained shift registers and shifts out the current time. In the back of the Clock there is also a litte LDR digitized by the ADC - so the clock can shut off in the night.
 
