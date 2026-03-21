@@ -2,7 +2,7 @@
 {{ $postImage := index .Params "post-image" }}
 {{ $postVideo := index .Params "post-video" }}
 
-<section class="hero is-fullheight has-text-centered" id="hero" style="--background-image:url({{ $postImage }});">
+<section class="hero is-fullheight has-text-centered" id="hero"{{ if $postVideo }} style="--background-image:url({{ $postImage }});"{{ else }} style="background-image: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%), url({{ $postImage }}); background-position: center; background-size: cover; background-repeat: no-repeat;"{{ end }}>
   {{ if $postVideo }}
   <video playsinline autoplay muted loop poster="{{ $postImage }}" id="video">
     <source src="{{ $postVideo }}" type="video/webm">

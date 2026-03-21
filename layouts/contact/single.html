@@ -4,11 +4,11 @@
   <div class="hero-body">
     <div class="container has-text-centered" id="page-section" style="padding-top: 5em;">
       <h1>Contact Form:</h1>
-      <form action="https://app.99inbound.com/api/e/-xSs64rn" onsubmit="submitFunction();" target="_self" method="post">
+      <form id="contact-form" action="https://app.99inbound.com/api/e/-xSs64rn" onsubmit="return submitFunction(event);" target="_self" method="post" novalidate>
         <div class="field">
           <label for="name" class="label is-size-4 has-text-weight-light"></label>
           <div class="control has-icons-left">
-            <input type="text" name="name" id="name" class="input" placeholder="Name" autofocus>
+            <input type="text" name="name" id="name" class="input" placeholder="Name" minlength="2" required autofocus>
             <span class="icon is-left">
               <i class="fa fa-user"></i>
             </span>
@@ -17,7 +17,7 @@
         <div class="field">
           <label for="email" class="label is-size-4 has-text-weight-light"></label>
           <div class="control has-icons-left">
-            <input type="email" name="email" id="inputEmailField" class="input" placeholder="Email" onchange="validateEmail(event.target.value)">
+            <input type="email" name="email" id="inputEmailField" class="input" placeholder="Email" onchange="validateEmail(event.target.value)" required>
             <span class="icon is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -29,11 +29,19 @@
         </div>
         <div class="field">
           <label for="message" class="label is-size-4 has-text-weight-light"></label>
-          <textarea name="message" id="message" rows="5" class="textarea is-medium" placeholder="Message"></textarea>
+          <textarea name="message" id="message" rows="5" class="textarea is-medium" placeholder="Message" minlength="10" required></textarea>
         </div>
-        <div style="position: absolute; left: -5000px;">
-          <input type="checkbox" name="stupendous_jade_matte_jacket" value="1" tabindex="-1" autocomplete="no">
+
+        <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+          <label for="company">Leave this field empty</label>
+          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off">
+          <input type="checkbox" name="stupendous_jade_matte_jacket" value="1" tabindex="-1" autocomplete="off">
         </div>
+
+        <input type="hidden" name="form_started_at" id="form_started_at" value="">
+        <input type="hidden" name="form_token" id="form_token" value="">
+        <p id="formErrorHint" class="help is-danger" style="display:none;"></p>
+
         <button type="submit" id="submitbutton" class="button is-success is-size-5" disabled>Submit</button>
       </form>
     </div>

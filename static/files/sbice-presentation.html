@@ -1,0 +1,389 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A probabilistic electrical simulator - SBICE</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+  <style>
+    body { background: #f3f6fb; }
+    .reveal { color: #111827; font-size: 30px; }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 { text-transform: none; }
+    .reveal .small { font-size: 0.72em; }
+    .reveal .tiny { font-size: 0.58em; }
+    .reveal .muted { opacity: 0.75; }
+    .reveal section p, .reveal section ul, .reveal section ol { margin-top: 0.3rem; margin-bottom: 0.3rem; }
+    .reveal ul, .reveal ol { line-height: 1.28; }
+    .reveal pre { width: 100%; box-shadow: none; margin: 0.2rem 0; font-size: 0.56em; }
+    .reveal pre code { max-height: 66vh; padding: 0.8rem 0.9rem; line-height: 1.22; }
+    .reveal table { width: 100%; font-size: 0.53em; }
+    .reveal th, .reveal td { padding: 0.25rem 0.4rem; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.12); }
+    .reveal section img { display: block; margin: 0.25rem auto; }
+    .reveal img.slide-img { max-height: 48vh; max-width: 90vw; width: auto; object-fit: contain; }
+    .reveal img.full-img { max-height: 62vh; max-width: 92vw; width: auto; object-fit: contain; }
+    .reveal section.pair-plot img { max-height: 60vh; max-width: 94vw; width: auto; object-fit: contain; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+    .grid-2 img { width: 100%; max-height: 28vh; object-fit: contain; }
+    .grid-2.equal img { max-height: 32vh; }
+    .split-30-70 { display: grid; grid-template-columns: 0.3fr 0.7fr; gap: 1rem; align-items: start; }
+    .split-33-33 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+    .first-example .split-30-70 { grid-template-columns: 0.28fr 0.72fr; gap: 0.7rem; }
+    .first-example img.slide-img { max-height: 34vh; }
+    .first-example ul { font-size: 0.8em; line-height: 1.2; }
+    .first-example .small { font-size: 0.6em; }
+    .glorified table { font-size: 0.5em; }
+    .glorified th, .glorified td { padding: 0.2rem 0.28rem; }
+    .math-block { font-size: 0.85em; }
+    .center { text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h2>A probabilistic electrical simulator</h2>
+        <p>Jonas Bodingbauer</p>
+        <p class="small">February 01, 2024</p>
+      </section>
+
+      <section>
+        <h3>Electrical Circuit: Voltage divider</h3>
+        <img class="slide-img" src="/files/sbice-images/voltage_divider.png" alt="Voltage divider circuit">
+        <p class="math-block">\[U_{out} = U \frac{R_2}{R_1 + R_2}\]</p>
+      </section>
+
+      <section>
+        <h3>Idea</h3>
+        <ul>
+          <li class="fragment">Components in a circuit have an expected value and a tolerance.</li>
+          <li class="fragment">Circuit gets input and produces a response.</li>
+          <li class="fragment">The response is a random variable described by a probability distribution.</li>
+          <li class="fragment"><strong>Priors</strong> and <strong>Observed</strong> are linked by the simulator model.</li>
+          <li class="fragment">Additional randomness: device noise, instrument noise, offsets, ...</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Electrical Simulations</h3>
+        <ul>
+          <li>DC Analysis</li>
+          <li>AC Analysis (treat everything as a linear component)</li>
+          <li>DC Analysis with nonlinearity (e.g. diodes)</li>
+          <li>Transient Analysis</li>
+          <li>Lots more...</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Finally, some modelling!</h3>
+        <p class="math-block">\[
+        \underbrace{\begin{bmatrix}
+          \mathbf{Y'} & \mathbf{B}\\
+          \mathbf{C} & \mathbf{D}
+        \end{bmatrix}}_{Y}
+        \cdot
+        \underbrace{\begin{bmatrix}
+          \vec{\varphi}\\
+          \vec{I}
+        \end{bmatrix}}_{x}
+        =
+        \underbrace{\begin{bmatrix}
+          \vec{J}\\
+          \vec{E}
+        \end{bmatrix}}_{F}
+        \]</p>
+        <p class="fragment">AC-Case: Domain changes to complex numbers (Fourier transform)</p>
+        <p class="fragment">Nonlinear case: Newton-Raphson fixed-point iteration</p>
+        <p class="fragment math-block">\[
+        \mathbf{Y}(\vec{x}_i) \cdot \vec{x}_{i+1} = -\mathbf{F}(\vec{x}_i) + \mathbf{Y}(\vec{x}_i) \cdot \vec{x}_i
+        \]</p>
+      </section>
+
+      <section>
+        <h3>Program flow</h3>
+        <ol>
+          <li>Read SPICE-like file</li>
+        </ol>
+        <div class="split-33-33 tiny">
+          <div>
+            <p><strong>voltagediv.cir</strong></p>
+            <pre><code data-trim>
+V1 0 in DC 2
+R3 in 2 11.72
+R1 2 3 1.2k
+R2 3 0 1.8k
+            </code></pre>
+          </div>
+          <div>
+            <p><strong>voltagediv.tol</strong></p>
+            <pre><code data-trim>
+R3 0.1%
+R1 5%
+R2 5%
+            </code></pre>
+          </div>
+        </div>
+        <ol start="2">
+          <li>Determine the matrix size</li>
+          <li>Read observed data from file(s)</li>
+          <li>Run inference using the simulator as a model</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Measurements</h3>
+        <div class="grid-2 equal">
+          <img src="/files/sbice-images/circuit.jpeg" alt="Circuit setup">
+          <img src="/files/sbice-images/osci.jpeg" alt="Oscilloscope setup">
+        </div>
+        <p class="center"><img src="/files/sbice-images/realvalue.jpeg" alt="Measured values" style="max-height: 19vh;"></p>
+      </section>
+
+      <section class="first-example">
+        <h3>First example extended</h3>
+        <div class="split-30-70">
+          <div>
+            <img class="slide-img" src="/files/sbice-images/extended_first_example.png" alt="Extended first example circuit">
+          </div>
+          <div>
+            <ul>
+              <li><span class="math-block">\(R_m\)</span> is an additional precision resistor for measuring current.</li>
+              <li><span class="math-block">\(\varphi_1\)</span> and <span class="math-block">\(\varphi_2\)</span> are potentials.</li>
+              <li>Priors:
+                <div class="small">\(R_1\), \(R_2\) normally distributed around nominal value.</div>
+                <div class="small">\(U_{offset_1}\), \(U_{offset_2}\) normally distributed around 0.</div>
+                <div class="small">\(U_{noise_1}\), \(U_{noise_2}\) uniformly distributed in \([0, 0.1]V\).</div>
+              </li>
+              <li>Observed: <span class="math-block">\(\varphi_1\)</span>, <span class="math-block">\(\varphi_2\)</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Results</h3>
+        <img class="full-img" src="/files/sbice-images/divider_data.svg" alt="Divider data results">
+      </section>
+
+      <section>
+        <section class="glorified">
+          <h3>Glorified linear regression?</h3>
+          <img class="full-img" src="/files/sbice-images/divider_sampling.svg" alt="Divider sampling">
+        </section>
+        <section class="glorified">
+          <h3>Glorified linear regression?</h3>
+          <img class="full-img" src="/files/sbice-images/divider_sampling_more.svg" alt="Divider sampling more">
+        </section>
+        <section class="glorified">
+          <h3>Glorified linear regression?</h3>
+          <img class="full-img" src="/files/sbice-images/divider_sampling_hexbin.svg" alt="Divider sampling hexbin">
+        </section>
+        <section class="glorified">
+          <h3>Glorified linear regression?</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Nominal Value</th>
+                <th>"True" Value</th>
+                <th>MAP-Estimate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>\(R_1\)</td><td>\(1.2\,\text{k}\Omega\)</td><td>\(1.176\,\text{k}\Omega\)</td><td>\(1.186\,\text{k}\Omega\)</td></tr>
+              <tr><td>\(R_2\)</td><td>\(1.8\,\text{k}\Omega\)</td><td>\(1.784\,\text{k}\Omega\)</td><td>\(1.776\,\text{k}\Omega\)</td></tr>
+              <tr><td>\(R_3\)</td><td>\(11.72\Omega\)</td><td>\(11.72\Omega\)</td><td>\(11.72\Omega\)</td></tr>
+              <tr><td>\(U_{offset_1}\)</td><td>?</td><td>?</td><td>\(-0.059\text{V}\)</td></tr>
+              <tr><td>\(U_{offset_2}\)</td><td>?</td><td>?</td><td>\(-0.026\text{V}\)</td></tr>
+              <tr><td>\(U_{noise_1}\)</td><td>?</td><td>?</td><td>\(0.2\,m\text{V}\)</td></tr>
+              <tr><td>\(U_{noise_2}\)</td><td>?</td><td>?</td><td>\(10^{-5}\text{V}\)</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <section>
+        <h3>A more complex circuit</h3>
+        <img class="full-img" src="/files/sbice-images/sallen_key.png" alt="Sallen key circuit">
+      </section>
+
+      <section>
+        <h3>Frequency Response</h3>
+        <img class="full-img" src="/files/sbice-images/sallenkeyx_data.svg" alt="Sallen key frequency response">
+      </section>
+
+      <section class="pair-plot">
+        <img src="/files/sbice-images/pairplot_sallenkey.svg" alt="Posterior pair plot">
+      </section>
+
+      <section class="pair-plot">
+        <img src="/files/sbice-images/pairplot_sallenkey_vs_prior.svg" alt="Posterior vs prior pair plot">
+      </section>
+
+      <section>
+        <h3>Results</h3>
+        <p>Obtained with three measured potentials: \(\varphi_1\), \(\varphi_2\), \(\varphi_5\).</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Nominal Value</th>
+              <th>"True" Value</th>
+              <th>MAP-Estimate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>\(R_1\)</td><td>\(100\,\text{k}\Omega\)</td><td>\(100.09\,\text{k}\Omega\)</td><td>\(100.08\,\text{k}\Omega\)</td></tr>
+            <tr><td>\(R_2\)</td><td>\(100\,\text{k}\Omega\)</td><td>\(99.97\,\text{k}\Omega\)</td><td>\(98.6\,\text{k}\Omega\)</td></tr>
+            <tr><td>\(R_3\)</td><td>\(150\,\text{k}\Omega\)</td><td>\(149.5\,\text{k}\Omega\)</td><td>\(151.2\,\text{k}\Omega\)</td></tr>
+            <tr><td>\(R_4\)</td><td>\(100\,\text{k}\Omega\)</td><td>\(100.06\,\text{k}\Omega\)</td><td>\(99.19\Omega\)</td></tr>
+            <tr><td>\(C_1\)</td><td>\(3.3\,\text{nF}\)</td><td>\(2.75\,\text{nF}\)</td><td>\(2.73\,\text{nF}\)</td></tr>
+            <tr><td>\(C_2\)</td><td>\(3.3\,\text{nF}\)</td><td>\(3.33\,\text{nF}\)</td><td>\(3.32\,\text{nF}\)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h3>Inference</h3>
+        <ul>
+          <li>Turing NUTS sampler performs really well.</li>
+          <li>Also tried other samplers (SMC, PG, Gibbs), but they did not work reasonably well without further tuning.</li>
+          <li>ADVI works wonders for this application (MAP estimate in seconds).</li>
+          <li>Choice of priors is important: output often depends on a ratio of variables, so scaled variables may be equally likely.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Normal distributed priors</h3>
+        <img class="full-img" src="/files/sbice-images/divider_sampling_hexbin.svg" alt="Normal prior result">
+      </section>
+
+      <section>
+        <h3>Uniform priors</h3>
+        <img class="full-img" src="/files/sbice-images/divider_sampling_uniform.svg" alt="Uniform prior result">
+      </section>
+
+      <section>
+        <h3>Challenges</h3>
+        <ul>
+          <li class="fragment">Getting Automatic Differentiation to work was quite a hassle (types...).</li>
+          <li class="fragment">Big range of values (e.g. \(10^{-12} - 10^{6}\)) does not play nicely with NUTS.</li>
+          <li class="fragment">Fixed by scaling variables and using logarithmic frequency response.</li>
+          <li class="fragment">Hard to know if results are actually reasonable if you do not know the true values.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Conclusion</h3>
+        <ul>
+          <li><strong>It works!</strong></li>
+          <li>Modelling needs to account for many effects to be realistic (measurement offsets, noise, parasitics, ...).</li>
+          <li>The nonlinear system suffers from convergence issues with some parameters explored by inference.</li>
+          <li>More components: transistors (BJT, MOSFETs, ...).</li>
+          <li>Transient analysis.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Thank you for your attention!<br>Questions?</h2>
+        <p><img src="/files/sbice-images/qrcode.png" alt="SBICE QR code" style="max-height: 30vh;"></p>
+        <p class="small">git: <a href="https://github.com/Caesiumhydroxid/SBICE" target="_blank" rel="noopener noreferrer">https://github.com/Caesiumhydroxid/SBICE</a></p>
+      </section>
+
+      <section>
+        <h3>Nonlinear Diode</h3>
+        <img class="full-img" src="/files/sbice-images/diode_inference.svg" alt="Diode inference">
+      </section>
+
+      <section>
+        <h3>DC Analysis Model</h3>
+        <pre><code class="language-julia" data-trim>
+@model function dcanalysis(...)
+  for e in keys(tolerances) ...
+      elementsR[e].R ~ Normal(elements[e].R,
+                  elements[e].R * tolerances[e])
+  end
+  offsets ~ MvNormal(zeros(observedNodeIndicesLength),
+                    diagm(0.01 .* ones(observedNodeIndicesLength)))
+  for i in 1:observedNodeIndicesLength
+      noise[i] ~ Uniform(0, 0.01)
+  end
+  A,RHS = assembleMatrixAndRhs(elementsR,nodes,type)
+  Ainv = inv(A)
+  for i in 1:amountOfMeasurements
+      RHS[nodes[elementsR["V1"].name]-1] = -voltages[i]
+      res = Ainv * RHS
+      results[i,:] = res[observedNodeIndices]
+  end
+  for (i,col) in enumerate(eachcol(results))
+      measurementMatrix[:,i] ~ MvNormal(col .+ offsets[i],
+              diagm(noise[i] * ones(amountOfMeasurements)))
+  end
+end
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Sallen Key Input</h3>
+        <div class="split-33-33 tiny">
+          <div>
+            <pre><code data-trim>
+V1 0 in AC 1
+R5 in 1 1.484k
+R1 1 2 100k
+R2 2 3 100k
+C1 2 out 3.3n
+C2 3 0 3.3n
+R3 out 4 150k
+R4 4 0 100k
+O1 3 4 out 0 1e5
+            </code></pre>
+          </div>
+          <div>
+            <pre><code data-trim>
+R5 0.001%
+R1 0.5%
+R2 0.5%
+R3 0.5%
+R4 0.5%
+C1 40%
+C2 40%
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Sallen Key Measurements</h3>
+        <pre><code data-trim>
+in Sa,Frequency in Hz,Gain in dB,Phase in deg,Amplitude in Vpp
+1.00E+00,1.000E+01,-2.426E-02,2.693E-03,2.500E+00
+2.00E+00,1.023E+01,-2.448E-02,3.685E-03,2.500E+00
+3.00E+00,1.047E+01,-2.481E-02,6.256E-04,2.500E+00
+4.00E+00,1.072E+01,-2.359E-02,1.049E-02,2.500E+00
+5.00E+00,1.096E+01,-2.475E-02,1.010E-02,2.500E+00
+6.00E+00,1.122E+01,-2.326E-02,4.135E-03,2.500E+00
+7.00E+00,1.148E+01,-2.272E-02,1.164E-02,2.500E+00
+8.00E+00,1.175E+01,-2.387E-02,-7.126E-03,2.500E+00
+9.00E+00,1.202E+01,-2.171E-02,1.350E-03,2.500E+00
+...
+        </code></pre>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: "slide",
+      plugins: [RevealMath.KaTeX, RevealHighlight]
+    });
+  </script>
+</body>
+</html>
