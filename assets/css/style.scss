@@ -399,3 +399,12 @@ a.navbar-item.is-active {
     }
 }
 
+// Suppress vertical scrollbar on blog pages
+html.blog-page {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar:vertical {
+        width: 0 !important;
+    }
+}
+

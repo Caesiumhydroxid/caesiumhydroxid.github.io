@@ -83,7 +83,6 @@ body.home-page #hero-main {
 	#post .content {
 		max-width: 100% !important;
 		min-width: 0 !important;
-		overflow-x: hidden !important;
 	}
 
 	#post .content .highlight,
@@ -96,7 +95,6 @@ body.home-page #hero-main {
 		max-width: 100% !important;
 		min-width: 0 !important;
 		box-sizing: border-box !important;
-		overflow-x: hidden !important;
 	}
 
 	#post .content pre,
