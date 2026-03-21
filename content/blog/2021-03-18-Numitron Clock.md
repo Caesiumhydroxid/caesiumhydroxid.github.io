@@ -1,6 +1,8 @@
 ---
 title: Numitron Clock
 layout: post
+date: 2021-03-18
+publishDate: 2021-03-18
 post-image: "/assets/images/NumitronSide.jpg"
 post-video: "/assets/videos/NumitronClock.webm"
 description: A freeform clock with numitrons

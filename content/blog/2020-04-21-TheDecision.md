@@ -1,6 +1,8 @@
 ---
 title: The Decision
 layout: post
+date: 2020-04-21
+publishDate: 2020-04-21
 post-image: "/assets/images/Die_EntscheidungJonasBodingbauer.jpg"
 post-video: "/assets/videos/TheDecision.webm"
 description: A game about life and death

@@ -1,0 +1,53 @@
+items:
+  - title: "Vampires can Lean into trust: Checking proofs for Soundness"
+    authors: "Bodingbauer, Jonas"
+    venue: "Master Thesis"
+    type: "Master Thesis"
+    status: "In Preparation"
+    supervisor: "Laura Kovacs"
+    year: 2026
+    
+  - title: "Lean on Vampire proofs (Short Paper)"
+    authors: "B.J, A.P, M.R, M.H, L.K"
+    venue: "In review"
+    type: "Paper"
+    status: "In Review"
+    year: 2026
+
+  - title: "First-principles screening of fluoride-based compounds for next-generation ultrathin gate dielectrics"
+    authors: "B.J, D.W, C.W, T.G"
+    venue: "In review"
+    type: "Paper"
+    status: "In Review"
+    year: 2025
+
+  - title: "First-principles screening of fluoride-based compounds for gate dielectric applications"
+    authors: "Bodingbauer, Jonas"
+    venue: "Master Thesis, Technische Universitat Wien"
+    type: "Master Thesis"
+    status: "Published"
+    award: "Faculty Award"
+    year: 2025
+    abstract: "A first-principles screening study of fluoride-based materials for gate dielectric use in advanced MOS technologies, focusing on dielectric performance and materials suitability."
+    doi: "10.34726/hss.2025.132589"
+    record: "https://repositum.tuwien.at/handle/20.500.12708/216402"
+    supervisor: "Tibor Grasser, Dominc Waldhoer, Christoph Wilhelmer"
+
+  - title: "System-level verification and testing of a safety-critical SoC using HW/SW Co-Simulation"
+    authors: "Bodingbauer, Jonas"
+    venue: "Bachelor Thesis, TU Wien / CERN"
+    type: "Bachelor Thesis"
+    status: "Published"
+    year: 2022
+    abstract: "A hardware/software co-simulation verification approach for a safety-critical Zynq-7000 SoC used in CERN radiation monitoring electronics, including UVM-based constrained-random testbench concepts."
+    record: "https://repository.cern/records/p8pkj-nt716"
+    pdf: "https://repository.cern/records/p8pkj-nt716/files/CERN-THESIS-2022-083.pdf"
+    supervisor: "Andreas Steininger, Hamza Boukabache, Stefan Tauner"
+
+  - title: "Stimulated Raman scattering in GaP, Si and Ge nanostructures"
+    authors: "Bodingbauer, Jonas"
+    venue: "Bachelor Thesis, TU Wien"
+    type: "Bachelor Thesis"
+    year: 2022
+    abstract: "Within the framework of this thesis, the Raman scattering behavior of Gallium phosphide (GaP), Silicon (Si) and Germanium (Ge) nanostructures was experimentally examined. A confocal microscope with backscattering setup and a laser used as pumping light source with a wavelength of 532 nm were used to show Stimulated Raman scattering (SRS) on several samples. Furthermore, the temperature dependence of the Raman Stokes scattering intensity and Raman peak red-shifting for GaP, Si and Gallium arsenide (GaAs) has been determined in the temperature range from 20 C to 140 C. The findings in this thesis can be used for further research on nanoscale enhanced stimulated Raman scattering to enable monolithically integrable Raman lasers."
+    supervisor: "Alois Lugstein"

@@ -1,6 +1,6 @@
 baseURL: "https://jonasb.at/"
 languageCode: "en-us"
-title: "Portfolio"
+title: "Jonas Bodingbauer"
 
 permalinks:
   blog: "/blog/:slug/"
@@ -10,7 +10,7 @@ disableKinds:
   - term
 
 params:
-  description: "Projects created by Jonas Bodingbauer"
+  description: "Logic and Computation student, Microelectronics and Photonics graduate"
   site_image: ""
   site_keywords: "Site, Template, Theme"
   favicon_url: "/assets/images/logo.png"
@@ -31,7 +31,7 @@ params:
 
   author_name: "Jonas Bodingbauer"
   author_image: "/assets/images/ProfilePicture.JPG"
-  author_about: "I consider myself a<a href=\"https://en.wikipedia.org/wiki/Maker_culture\">Maker</a>. I am passionate about electronics, informatics and<a href=\"https://en.wikipedia.org/wiki/STEAM_fields\">STEAM</a>. When I find time to work on projects I love to build things out of old technologies - trying to put new life into them by combining them with new technology. Currently, I am studying Electrical Engineering as well as Software Engineering at<a href=\"https://www.tuwien.at/\">TU Wien</a>."
+  author_about: "I am a maker and engineer working at the intersection of computation and electronics. I am currently a student in Logic and Computation at <a href=\"https://www.tuwien.at/\">TU Wien</a> and have finished my degree in Microelectronics and Photonics. I enjoy building practical systems from first principles - from embedded hardware and circuit-level projects to compilers, simulators, and software tooling."
 
   visitor_analytics_id: "61655f82-7abc-11eb-b589-901b0edac50a"
 

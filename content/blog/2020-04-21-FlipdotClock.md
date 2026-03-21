@@ -1,6 +1,8 @@
 ---
 title: Flipdot Clock
 layout: post
+date: 2020-04-21
+publishDate: 2020-04-21
 post-image: "/assets/images/FlipdotClock.jpg"
 post-video: "/assets/videos/FlipdotClock.webm"
 description: A Flipdot Clock built with an old LAWO Bus Display

@@ -1,6 +1,8 @@
 ---
 title: Magnet Pong
 layout: post
+date: 2021-03-18
+publishDate: 2021-03-18
 post-image: "/assets/images/MagnetPong.jpg"
 post-video: "/assets/videos/MagnetPong.webm"
 description: Pong with a ball and paddle out of magnets

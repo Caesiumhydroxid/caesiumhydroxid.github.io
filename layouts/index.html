@@ -34,6 +34,49 @@
   </div>
 </section>
 
+<section class="hero is-fullheight has-text-centered has-background-white-ter" id="publications">
+  <div class="hero-body">
+    <div class="container">
+      <div class="section">
+        <p class="subtitle is-uppercase has-text-weight-medium has-text-grey">Scientific Publications</p>
+      </div>
+      {{ $pubs := .Site.Data.publications.items }}
+      {{ if gt (len $pubs) 0 }}
+      <div class="columns is-centered is-multiline" id="publication-list">
+        {{ range $pubs }}
+        <div class="column is-10-desktop is-11-tablet is-12-mobile">
+          <article class="publication-card has-text-left">
+            <h3 class="title is-size-5 mb-2">{{ .title }}</h3>
+            <p class="is-size-6 has-text-grey mb-1">{{ .authors }}</p>
+            <p class="is-size-6 has-text-grey-dark mb-3">{{ .venue }}{{ with .year }} ({{ . }}){{ end }}</p>
+            {{ with .supervisor }}
+            <p class="is-size-7 has-text-grey mb-3">Supervisor: {{ . }}</p>
+            {{ end }}
+            <div class="publication-badges mb-3">
+              {{ with .type }}<span class="publication-badge publication-badge-type">{{ . }}</span>{{ end }}
+              {{ with .status }}<span class="publication-badge publication-badge-status">{{ . }}</span>{{ end }}
+              {{ with .award }}<span class="publication-badge publication-badge-award">{{ . }}</span>{{ end }}
+            </div>
+            {{ with .abstract }}
+            <p class="mb-3">{{ . }}</p>
+            {{ end }}
+            <div class="publication-links">
+              {{ with .record }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">Record</a>{{ end }}
+              {{ with .doi }}<a href="https://doi.org/{{ . }}" target="_blank" rel="noopener noreferrer">DOI</a>{{ end }}
+              {{ with .pdf }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">PDF</a>{{ end }}
+              {{ with .code }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">Code</a>{{ end }}
+            </div>
+          </article>
+        </div>
+        {{ end }}
+      </div>
+      {{ else }}
+      <p class="is-size-5 has-text-grey">Publications will be listed here soon.</p>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
 <section class="hero is-fullheight has-text-centered has-background-white-ter" id="about">
   <div class="hero-body">
     <div class="container">
@@ -93,23 +136,40 @@
 <script>
   window.addEventListener("scroll", function () {
     var scroll = this.scrollY;
-    var item = document.getElementsByClassName('navbar-item');
-    if (item.length < 4) return;
+    var navMap = [
+      { id: 'project', href: '/#project' },
+      { id: 'publications', href: '/#publications' },
+      { id: 'about', href: '/#about' },
+      { id: 'contact', href: '/#contact' }
+    ];
 
-    if (scroll < 565) {
-      item[1].classList.add('is-active');
-      item[2].classList.remove('is-active');
-      item[3].classList.remove('is-active');
-    }
-    if (scroll > 570 && scroll <= 1140) {
-      item[1].classList.remove('is-active');
-      item[2].classList.add('is-active');
-      item[3].classList.remove('is-active');
-    }
-    if (scroll > 1140) {
-      item[1].classList.remove('is-active');
-      item[2].classList.remove('is-active');
-      item[3].classList.add('is-active');
+    var items = document.querySelectorAll('.navbar-end .navbar-item');
+    items.forEach(function (item) {
+      if (item.getAttribute('href') !== '/') {
+        item.classList.remove('is-active');
+      }
+    });
+
+    var current = navMap[0];
+    navMap.forEach(function (entry) {
+      var section = document.getElementById(entry.id);
+      if (section && scroll >= section.offsetTop - 120) {
+        current = entry;
+      }
+    });
+
+    items.forEach(function (item) {
+      if (item.getAttribute('href') === current.href) {
+        item.classList.add('is-active');
+      }
+    });
+
+    if (scroll < 120) {
+      items.forEach(function (item) {
+        if (item.getAttribute('href') !== '/') {
+          item.classList.remove('is-active');
+        }
+      });
     }
   });
 </script>

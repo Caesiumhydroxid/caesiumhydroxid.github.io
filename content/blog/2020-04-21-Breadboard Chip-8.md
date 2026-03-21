@@ -1,6 +1,8 @@
 ---
 title: Breadboard Chip-8
 layout: post
+date: 2020-04-21
+publishDate: 2020-04-21
 post-image: "/assets/images/Chip8/FullCPU.jpg"
 post-video: "/assets/videos/Chip8.webm"
 description: A CPU on a Breadboard
