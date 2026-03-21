@@ -15,5 +15,124 @@ html,body{font-family:'Space Grotesk',sans-serif}#hero-main .title,#hero .title,
 body.home-page #hero-main{position:relative;isolation:isolate}body.home-page #hero-main video#video{position:absolute;top:0;left:0;width:100%;height:100%;min-width:0;min-height:0;transform:none;object-fit:cover;z-index:0}body.home-page #hero-main .hero-body{position:relative;z-index:2}
 body.home-page #hero-main::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.58) 0%,rgba(0,0,0,0.28) 42%,rgba(0,0,0,0.62) 100%)}body.home-page #hero-main::after{z-index:1}
 body:not(.home-page) #hero{position:relative;isolation:isolate}body:not(.home-page) #hero video#video{position:absolute;top:0;left:0;width:100%;height:100%;min-width:0;min-height:0;transform:none;object-fit:cover;z-index:0}body:not(.home-page) #hero .hero-body{position:relative;z-index:2}body:not(.home-page) #hero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.58) 0%,rgba(0,0,0,0.28) 42%,rgba(0,0,0,0.62) 100%)}
-#navbar .navbar-brand,#navbar .navbar-menu{background:transparent!important}#navbar .navbar-item{color:rgba(255,255,255,0.9)!important;background-color:transparent!important}#navbar .navbar-item:hover,#navbar .navbar-item:focus-visible{color:#fff!important;background-color:rgba(255,255,255,0.16)!important}#navbar .navbar-item.is-active{color:#fff!important;background-color:rgba(255,255,255,0.24)!important}#navbar .navbar-item.is-active:hover{color:#fff!important;background-color:rgba(255,255,255,0.3)!important}#navbar .navbar-brand .navbar-item strong{color:#fff!important}body.home-page #hero-main::before{content:""!important;position:absolute!important;inset:0!important;pointer-events:none!important;z-index:1!important;background:linear-gradient(180deg,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.32) 42%,rgba(0,0,0,0.74) 100%)!important}body:not(.home-page) #hero::before{content:""!important;position:absolute!important;inset:0!important;pointer-events:none!important;z-index:1!important;background:linear-gradient(180deg,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.32) 42%,rgba(0,0,0,0.74) 100%)!important}#project #project-card,#project .card,#project .card-image{border-radius:0.9rem!important;box-shadow:none!important;border:none!important;outline:none!important}#project .card{background:transparent!important;overflow:hidden!important}#project .card-content{border:none!important}#project #project-card{transform:none!important;margin:0.65rem 0.95rem!important}#project #project-card:hover,#project #project-card:focus-within{transform:none!important;box-shadow:none!important;border:none!important;outline:none!important}#project .card:hover,#project .card:focus,#project .card:focus-visible,#project .card-image:hover,#project a:focus,#project a:focus-visible{background-color:transparent!important;box-shadow:none!important;border:none!important;outline:none!important}#project .columns.is-multiline{row-gap:0.25rem}@media (max-width:1023px){#navbar .navbar-menu{background:rgba(10,15,25,0.96)!important}}
+#navbar .navbar-brand,#navbar .navbar-menu{background:transparent!important}#navbar .navbar-item{color:rgba(255,255,255,0.9)!important;background-color:transparent!important}#navbar .navbar-item:hover,#navbar .navbar-item:focus-visible{color:#fff!important;background-color:rgba(255,255,255,0.16)!important}#navbar .navbar-item.is-active{color:#fff!important;background-color:rgba(255,255,255,0.24)!important}#navbar .navbar-item.is-active:hover{color:#fff!important;background-color:rgba(255,255,255,0.3)!important}#navbar .navbar-brand .navbar-item strong{color:#fff!important}body.home-page #hero-main::before{content:""!important;position:absolute!important;inset:0!important;pointer-events:none!important;z-index:1!important;background:linear-gradient(180deg,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.32) 42%,rgba(0,0,0,0.74) 100%)!important}body:not(.home-page) #hero::before{content:""!important;position:absolute!important;inset:0!important;pointer-events:none!important;z-index:1!important;background:linear-gradient(180deg,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.32) 42%,rgba(0,0,0,0.74) 100%)!important}#project #project-card,#project .card,#project .card-image{border-radius:0.9rem!important;box-shadow:none!important;border:none!important;outline:none!important}#project .card{background:transparent!important;overflow:hidden!important}#project .card-content{border:none!important}#project #project-card{transform:none!important;margin:0.65rem 0.95rem!important}#project #project-card:hover,#project #project-card:focus-within{transform:none!important;box-shadow:none!important;border:none!important;outline:none!important}#project .card:hover,#project .card:focus,#project .card:focus-visible,#project .card-image:hover,#project a:focus,#project a:focus-visible{background-color:transparent!important;box-shadow:none!important;border:none!important;outline:none!important}#project .columns.is-multiline{row-gap:0.25rem}#post .content .highlight,#post .content .highlighter-rouge,#post .content pre,#post .content figure.highlight,#post .content div.highlight,#post .content .highlight table{display:block!important;width:100%!important;max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch!important}#post .content .highlight pre,#post .content .highlighter-rouge pre{margin:0!important}#post .content pre code{display:inline-block!important;min-width:max-content!important;max-width:none!important;white-space:pre!important}#post .content .highlight pre code>span{display:block!important;width:auto!important;min-width:0!important}#post .content .highlight pre code>span>span{display:inline!important;width:auto!important;min-width:0!important}#post .content .highlight pre{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}@media (max-width:1023px){#navbar .navbar-menu{background:rgba(10,15,25,0.96)!important}}
+/* Force visible horizontal scrolling for long code lines in posts */
+#post .content pre,
+#post .content .highlight,
+#post .content .highlighter-rouge,
+#post .content figure.highlight,
+#post .content div.highlight,
+#post .content .highlight table {
+	overflow-x: scroll !important;
+	overflow-y: hidden !important;
+	max-width: 100% !important;
+	width: 100% !important;
+	display: block !important;
+	-webkit-overflow-scrolling: touch !important;
+}
+
+#post .content pre code,
+#post .content .highlight pre code {
+	white-space: pre !important;
+	display: inline-block !important;
+	min-width: max-content !important;
+}
+
+/* Keep blog post body scale consistent with the rest of the site */
+#post .content {
+	font-size: 1rem !important;
+	line-height: 1.65 !important;
+}
+
+#post .content h1,
+#post .content h2,
+#post .content h3,
+#post .content h4 {
+	line-height: 1.25 !important;
+}
+
+@media (max-width: 768px) {
+	#post .content {
+		font-size: 0.96rem !important;
+	}
+}
+
+/* Fix hero sizing and back-to-top alignment after layout merges */
+body.home-page #hero-main {
+	min-height: 100vh !important;
+}
+
+#footer #backtotopback {
+	text-align: center !important;
+}
+
+#footer #backtotop {
+	width: auto !important;
+	max-width: 12rem !important;
+	margin: 0 auto !important;
+	padding: 0.5rem 0.9rem !important;
+}
+
+#footer #backtotop-link {
+	display: inline-block !important;
+}
+
+/* Final mobile code-block layout guard: container shrinks, code scrolls inside */
+@media (max-width: 1100px) {
+	#post .container,
+	#post .content {
+		max-width: 100% !important;
+		min-width: 0 !important;
+		overflow-x: hidden !important;
+	}
+
+	#post .content .highlight,
+	#post .content .highlighter-rouge,
+	#post .content figure.highlight,
+	#post .content div.highlight,
+	#post .content .highlight table {
+		display: block !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+		overflow-x: hidden !important;
+	}
+
+	#post .content pre,
+	#post .content .highlight pre,
+	#post .content .highlighter-rouge pre {
+		display: block !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		-webkit-overflow-scrolling: touch !important;
+	}
+
+	#post .content pre code,
+	#post .content .highlight pre code,
+	#post .content .highlighter-rouge pre code {
+		display: inline-block !important;
+		width: auto !important;
+		max-width: none !important;
+		min-width: max-content !important;
+		white-space: pre !important;
+	}
+
+	#post .content .highlight pre code > span {
+		display: block !important;
+		width: auto !important;
+		min-width: 0 !important;
+	}
+
+	#post .content .highlight pre code > span > span {
+		display: inline !important;
+		width: auto !important;
+		min-width: 0 !important;
+	}
+}
+
 /*# sourceMappingURL=style.css.map */

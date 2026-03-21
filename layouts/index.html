@@ -98,7 +98,7 @@
       </div>
 
       <hr style="margin:0.6rem auto;">
-      <div class="container" id="contact-links">
+      <div id="contact-links">
       {{ with .Site.Params.facebook_username }}
       <a id="contact-button" href="https://m.me/{{ . }}" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-facebook-messenger"></i>Ping me on Messenger
@@ -118,6 +118,7 @@
         {{ with .Site.Params.spotify_username }}<a href="https://open.spotify.com/user/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black">Spotify</a>{{ end }}
       </div>
       </div>
+    </div>
   </div>
 </section>
 
