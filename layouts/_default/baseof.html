@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html{{ if eq .Section "blog" }} class="blog-page"{{ end }}>
 <head>
   {{ partial "head.html" . }}
 </head>
