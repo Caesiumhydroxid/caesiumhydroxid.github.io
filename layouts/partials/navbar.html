@@ -1,0 +1,38 @@
+<nav class="navbar is-black is-fixed-top" role="navigation" aria-label="main navigation" id="navbar">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <strong>{{ .Site.Title }}</strong>
+      </a>
+      <div class="navbar-burger" data-target="navbar-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="navbar-menu has-background-black" id="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item {{ if .IsHome }}is-active{{ end }}" href="/">HOME</a>
+        <a class="navbar-item" href="/#project">PROJECTS</a>
+        <a class="navbar-item" href="/#about">ABOUT</a>
+        <a class="navbar-item" href="/#contact">CONTACT</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    if (navbarBurgers.length > 0) {
+      navbarBurgers.forEach(function (el) {
+        el.addEventListener('click', function () {
+          var target = el.dataset.target;
+          var menu = document.getElementById(target);
+          el.classList.toggle('is-active');
+          menu.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+</script>

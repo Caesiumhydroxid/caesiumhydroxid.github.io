@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ if not .Params.hide_nav }}
+    {{ partial "navbar.html" . }}
+  {{ end }}
+  {{ block "main" . }}{{ end }}
+  {{ if not .Params.hide_footer }}
+    {{ partial "footer.html" . }}
+  {{ end }}
+</body>
+</html>

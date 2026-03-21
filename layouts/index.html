@@ -1,0 +1,123 @@
+{{ define "main" }}
+<section class="hero is-fullheight has-text-centered" id="hero-main" style="--background-image:url({{ .Site.Params.front_image }});">
+  <video playsinline autoplay muted loop poster="{{ .Site.Params.front_image }}" id="video">
+    <source src="{{ .Site.Params.front_video }}" type="video/webm">
+  </video>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title has-text-white is-size-1 is-uppercase has-text-weight-bold">{{ .Site.Title }}</h1>
+      <h3 class="subtitle has-text-white-bis is-uppercase has-text-weight-medium is-marginless">{{ .Site.Params.description }}</h3>
+      <hr>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-fullheight" id="project">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="section">
+        <p class="subtitle is-uppercase has-text-weight-medium has-text-grey">Projects</p>
+      </div>
+      <div class="columns is-centered is-multiline is-mobile">
+        {{ range where .Site.RegularPages "Section" "blog" }}
+          <div class="column has-text-centered is-paddingless is-marginless is-one-third-widescreen is-one-third-desktop is-one-third-tablet is-two-fifths-mobile is-three-quarters-touch" id="project-card">
+            <a href="{{ .RelPermalink }}">
+              <div class="has-background-black card">
+                <figure class="card-image image is-1by1" style="background-image: url({{ index .Params "post-image" }});"></figure>
+                <h1 class="card-content has-text-white is-size-4">{{ .Title }}</h1>
+              </div>
+            </a>
+          </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-fullheight has-text-centered has-background-white-ter" id="about">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-one-fifth-desktop is-one-fifth-tablet is-one-fifth-fullhd">
+          <figure class="image">
+            <img class="is-rounded" src="{{ .Site.Params.author_image }}" alt="{{ .Site.Params.author_name }}">
+          </figure>
+        </div>
+        <div class="column has-text-left-desktop has-text-left-tablet has-text-left-fullhd has-text-left-widescreen">
+          <p>{{ .Site.Params.author_about | safeHTML }}</p>
+          <br>
+          <div class="columns is-centered">
+            <div>
+              <a href="/#contact" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined">Contact Me</a>
+            </div>
+            <div>
+              <a href="/blog/" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined">Projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-fullheight has-text-centered" id="contact">
+  <div class="hero-body">
+    <div class="container">
+      {{ with .Site.Params.facebook_username }}
+      <a id="contact-button" href="https://m.me/{{ . }}" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-messenger"></i>Ping me on Messenger
+      </a>
+      {{ end }}
+
+      <a id="contact-button" href="/contact/" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-envelope"></i>Send me a Message
+      </a>
+
+      {{ with .Site.Params.twitter_username }}
+      <a id="contact-button" href="https://www.twitter.com/intent/tweet?screen_name={{ . }}" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-twitter"></i>Tweet me on Twitter
+      </a>
+      {{ end }}
+
+      <hr>
+      <h3 class="is-size-5 is-uppercase has-text-weight-semibold has-text-black is-marginless">You Can find me here</h3>
+      <div class="column is-full is-size-3">
+        {{ with .Site.Params.facebook_username }}<a href="http://www.facebook.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-facebook"></i></a>{{ end }}
+        {{ with .Site.Params.twitter_username }}<a href="http://www.twitter.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-twitter"></i></a>{{ end }}
+        {{ with .Site.Params.instagram_username }}<a href="http://www.instagram.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-instagram"></i></a>{{ end }}
+        {{ with .Site.Params.linkedin_username }}<a href="http://www.linkedin.com/in/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-linkedin"></i></a>{{ end }}
+        {{ with .Site.Params.github_username }}<a href="http://www.github.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-github"></i></a>{{ end }}
+        {{ with .Site.Params.youtube_channel_id }}<a href="http://www.youtube.com/channel/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-youtube"></i></a>{{ end }}
+        {{ with .Site.Params.reddit_username }}<a href="http://www.reddit.com/u/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-reddit"></i></a>{{ end }}
+        {{ with .Site.Params.behance_username }}<a href="http://www.behance.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-behance"></i></a>{{ end }}
+        {{ with .Site.Params.dribbble_username }}<a href="http://www.dribbble.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-dribbble"></i></a>{{ end }}
+        {{ with .Site.Params.spotify_username }}<a href="http://open.spotify.com/user/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black"><i class="fab fa-spotify"></i></a>{{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener("scroll", function () {
+    var scroll = this.scrollY;
+    var item = document.getElementsByClassName('navbar-item');
+    if (item.length < 4) return;
+
+    if (scroll < 565) {
+      item[1].classList.add('is-active');
+      item[2].classList.remove('is-active');
+      item[3].classList.remove('is-active');
+    }
+    if (scroll > 570 && scroll <= 1140) {
+      item[1].classList.remove('is-active');
+      item[2].classList.add('is-active');
+      item[3].classList.remove('is-active');
+    }
+    if (scroll > 1140) {
+      item[1].classList.remove('is-active');
+      item[2].classList.remove('is-active');
+      item[3].classList.add('is-active');
+    }
+  });
+</script>
+{{ end }}

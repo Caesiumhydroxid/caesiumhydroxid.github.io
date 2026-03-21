@@ -1,0 +1,48 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="theme-color" content="#000000">
+<meta name="keywords" content="{{ .Site.Params.site_keywords }}">
+
+{{ $title := .Site.Title }}
+{{ if .Title }}
+  {{ $title = printf "%s | %s" .Site.Title .Title }}
+{{ end }}
+<title>{{ $title }}</title>
+
+{{ $description := .Site.Params.description }}
+{{ if .Params.description }}
+  {{ $description = .Params.description }}
+{{ end }}
+
+{{ $image := .Site.Params.site_image }}
+{{ with index .Params "post-image" }}
+  {{ $image = . }}
+{{ end }}
+
+<meta name="og:title" content="{{ $title }}">
+<meta name="og:description" content="{{ $description }}">
+<meta name="og:image" content="{{ $image }}">
+<meta name="og:image:alt" content="{{ $title }}">
+<meta name="og:url" content="{{ .Permalink }}">
+<meta name="og:site_name" content="{{ .Site.Title }}">
+<meta name="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:site" content="@{{ .Site.Params.twitter_username }}">
+<meta name="twitter:creator" content="@{{ .Site.Params.twitter_username }}">
+<meta name="twitter:image:src" content="{{ $image }}">
+
+<meta name="description" content="{{ $description }}">
+<meta name="image" content="{{ $image }}">
+<meta itemprop="name" content="{{ $title }}">
+<meta name="author" content="{{ .Site.Params.author_name }}">
+<meta itemprop="description" content="{{ $description }}">
+<meta itemprop="image" content="{{ $image }}">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="https://kit.fontawesome.com/6a97161b76.js" async defer crossorigin="anonymous"></script>
+<link rel="shortcut icon" href="{{ with .Site.Params.favicon_url }}{{ . }}{{ else }}/assets/images/logo.png{{ end }}" type="image/x-icon">
+<link rel="dns-prefetch" href="https://app-worker.visitor-analytics.io/">

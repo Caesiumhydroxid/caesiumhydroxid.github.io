@@ -1,0 +1,34 @@
+{{ define "main" }}
+<section class="hero is-fullheight" id="blog">
+  <div class="hero-body">
+    <div class="container">
+      <nav class="level has-text-centered">
+        <div class="level-left">
+          <p class="subtitle is-uppercase has-text-weight-medium has-text-grey">Have a Good Read</p>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  {{ range .Pages.ByDate.Reverse }}
+  <div class="columns has-text-centered" id="blog-card">
+    <div class="column is-marginless is-paddingless is-one-third-desktop is-one-third-fullhd is-one-third-tablet">
+      <div class="image is-16by9" style="background-image: url({{ index .Params "post-image" }});background-size: cover;"></div>
+    </div>
+    <a href="{{ .RelPermalink }}">
+      <div class="column has-text-left-desktop has-text-left-tablet">
+        <h1 class="title is-size-4-touch">{{ .Title }}</h1>
+        <div class="content has-text-grey">
+          {{ .Summary | plainify | truncate 300 }}
+          <hr class="has-background-grey">
+          <span class="has-text-grey">Published on <span class="has-text-weight-semibold">{{ .Date.Format "January 2, 2006" }}</span></span>
+          | <i class="fas fa-clock"></i>
+          <span class="has-text-weight-semibold">{{ .ReadingTime }} min</span> read
+        </div>
+      </div>
+    </a>
+  </div>
+  {{ end }}
+</section>
+<br>
+{{ end }}

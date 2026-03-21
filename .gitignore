@@ -2,3 +2,7 @@ ImagesUncompressed
 .vscode
 .jekyll-cache
 _compress_images_cache.yml
+vendor/
+.bundle/
+public/
+.hugo_build.lock

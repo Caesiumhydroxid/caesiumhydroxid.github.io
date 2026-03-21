@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{ $postImage := index .Params "post-image" }}
+{{ $postVideo := index .Params "post-video" }}
+
+<section class="hero is-fullheight has-text-centered" id="hero" style="--background-image:url({{ $postImage }});">
+  {{ if $postVideo }}
+  <video playsinline autoplay muted loop poster="{{ $postImage }}" id="video">
+    <source src="{{ $postVideo }}" type="video/webm">
+  </video>
+  {{ end }}
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title has-text-white is-size-1 is-uppercase has-text-weight-bold">{{ .Title }}</h1>
+      {{ with .Params.description }}
+      <h3 class="subtitle has-text-white-bis is-uppercase has-text-weight-medium is-marginless">{{ . }}</h3>
+      {{ end }}
+      <hr>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-fullheight has-text-centered" id="post">
+  <div class="hero-body">
+    <div class="container">
+      <div class="content has-text-justified-desktop has-text-justified-fullhd has-text-justified has-text-justified-tablet has-text-left-mobile">
+        {{ .Content }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
