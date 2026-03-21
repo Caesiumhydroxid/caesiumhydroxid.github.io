@@ -10,8 +10,8 @@ tags:
 
 
 # Description 
-[Chip-8](https://de.wikipedia.org/wiki/CHIP-8) describes an "assembly-type" language as well as a typically interpreted virtual machine. I built a hardware CPU which is capable of executing these CHIP-8 instruction. This was a quite challenging task because I built everything as it came instead of having it perfectly planned in the beginning and some instructions are quite heavy-weight, where others are very simple.
-The tutorials of [Ben Eater](https://www.youtube.com/c/BenEater/videos) inspired me to build this CPU. Instead of following this tutorial step by step I built many components myself and sometimes consulted his videos if I was unsure how to solve something. Because of the "build as I go" mentality (partly because I did not understand everything in the beginning) the modules are not documented in detail which I really regret.
+[Chip-8](https://de.wikipedia.org/wiki/CHIP-8) describes an "assembly-like" language and a typically interpreted virtual machine. I built a hardware CPU capable of executing CHIP-8 instructions. This was quite challenging because I built everything as I went instead of planning it all perfectly from the start, and some instructions are much more complex than others.
+The tutorials by [Ben Eater](https://www.youtube.com/c/BenEater/videos) inspired me to build this CPU. Instead of following them step by step, I built many components myself and consulted his videos when I was unsure how to solve something. Because of this "build as I go" mindset (partly because I did not understand everything in the beginning), the modules are not documented in detail, which I really regret.
 
 <figure>
   <img class="post-image" src="/assets/images/Chip8Description.jpeg"/>
@@ -19,20 +19,20 @@ The tutorials of [Ben Eater](https://www.youtube.com/c/BenEater/videos) inspired
 </figure>
 
 # Very Useful Resources for Chip 8
-* My goto reference for the instruction set [http://devernay.free.fr/hacks/chip8/C8TECH10.HTM](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
+* My go-to reference for the instruction set [http://devernay.free.fr/hacks/chip8/C8TECH10.HTM](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
 * Awesome assembler, simulator,... [https://johnearnest.github.io/Octo/](https://johnearnest.github.io/Octo/)
 * Very clear tutorials for building a Breadboard CPU [https://www.youtube.com/c/BenEater/videos](https://www.youtube.com/c/BenEater/videos)
 
 # Caveats
 * Because the whole build is based on breadboards the contacts are degrading with time — 3 years after I built it, it is still working, but sometimes glitches happen which is quite unfortunate.
-* Chip-8 has some Instructions which are not well-defined. I settled to use the standard settings of the [Octo](https://johnearnest.github.io/Octo/) project. 
+* Chip-8 has some instructions that are not well-defined. I settled on using the standard settings of the [Octo](https://johnearnest.github.io/Octo/) project.
 * I mostly built it with components I had on hand or that were easily available — therefore some choices were made because of availability and not because of simplicity or elegance.
 * Because of limited space and money I sometimes combined parts of the CPU which should not be combined. For example, I used a single SRAM chip to store REG A-F (which itself is quite ugly already) as well as the 16 address deep stack.
-* Looking at it after a few years I made many questionable choices during building it - which I surely made because of poor planning. But all in all it was a really awesome learning experience and I still love to look at the mess of cables, breadboards and chips which somehow work in harmony (more or less).
+* Looking at it a few years later, I can see many questionable design choices, which were mostly due to poor planning. Still, it was an awesome learning experience, and I still love looking at the mess of cables, breadboards, and chips that somehow work in harmony (more or less).
 
 # Modules
 ## Clock & State Control
-This is probably the easiest Module and very similar to the version of Ben Eater - it has an adjustable clock (astable 555) (~100Hz - 20kHz) as well as start and stop circuits. For the development process it also features a single stepping mode which uses a monostable 555 to generate pulses. A double-throw switch is used for program loading mode (which is explained in the RAM module). The last button on there is a reset-button which resets the PC and the microstep counter (inside the control logic).
+This is probably the easiest module and is very similar to Ben Eater's version. It has an adjustable clock (astable 555, around 100 Hz to 20 kHz), plus start and stop circuits. For development, it also features a single-step mode that uses a monostable 555 to generate pulses. A double-throw switch is used for program loading mode (explained in the RAM module). The last button is a reset button that resets the PC and the microstep counter (inside the control logic).
 
 <figure>
   <img class="post-image" src="/assets/images/Chip8/ClockAndRAM.jpg"  />
@@ -42,19 +42,19 @@ This is probably the easiest Module and very similar to the version of Ben Eater
 ---
 
 ## Program Counter
-The job of the program counter is to know where in the program we currently are. It mainly consists of 3 [74HC193](https://assets.nexperia.com/documents/data-sheet/74HC_HCT193.pdf) which are able to count up and down (only the up direction is used). The output address is directly connected to the RAM (which is able to take addresses from either PC or BUS depending on a control flag). The PC can also connect to the normal system bus to load and output its content.
+The job of the program counter is to track where we currently are in the program. It mainly consists of three [74HC193](https://assets.nexperia.com/documents/data-sheet/74HC_HCT193.pdf) counters, which can count up and down (only up is used here). The output address is directly connected to RAM (which can take addresses from either the PC or the bus depending on a control flag). The PC can also connect to the normal system bus to load and output its value.
 
 
 
 ---
 
 ## System-bus
-Every word of data is transmitted over the main system bus located in the middle except the Program counter addresses (which is mentioned above). Each module is connected to the bus using 74HCT244 or 74HC245 tristate bus-drivers. This single bus is probably the biggest bottleneck but as it made interconnecting the components very simple (because the location of each module relative to other modules did not need to be known at all) it fit my "build as I go" style very well. The biggest regret I have with this bus is that I made it 12 bit wide. In the beginning of the project I thought that this is going to be useful because the address space of the CHIP-8 machine is 12-bit wide. But in the end I used the full 12 bits for only 2 or 3 instructions - which definitely was not worth the trouble in the end. 
+Every data word is transmitted over the main system bus in the middle, except for program counter addresses (mentioned above). Each module is connected to the bus using 74HCT244 or 74HC245 tri-state bus drivers. This single bus is probably the biggest bottleneck, but it made interconnecting components very simple, so it fit my "build as I go" style well. My biggest regret is making it 12 bits wide. Early in the project I thought this would be useful because the CHIP-8 address space is 12-bit wide, but in the end I needed all 12 bits for only two or three instructions.
 
 ---
 
 ## RAM
-The main building block of the RAM is a [KM62256](https://pdf1.alldatasheet.com/datasheet-pdf/view/37298/SAMSUNG/KM62256CL.html) 32Kx8bit SRAM. The RAM also features a KM28C64 EEPROM for loading the program into RAM. This program loading is achieved by switching a switch on the Clock&State Control and letting the CPU run for a few moments (less then 1/2 second) - contents from the EEPROM are copied to the RAM with every clock cycle.
+The main building block of RAM is a [KM62256](https://pdf1.alldatasheet.com/datasheet-pdf/view/37298/SAMSUNG/KM62256CL.html) 32Kx8-bit SRAM. RAM also includes a KM28C64 EEPROM for loading programs into memory. Program loading is done by switching Clock & State Control and letting the CPU run briefly (less than half a second), while EEPROM contents are copied into RAM on each clock cycle.
 
 The rest of the circuit (which mostly consists of 74HC157 Multiplexers) is used to manually program the memory which was used during development.
 
@@ -63,8 +63,8 @@ The rest of the circuit (which mostly consists of 74HC157 Multiplexers) is used 
 ## Registers A-F, Stack, Stack-pointer and Register I
 Registers are the place where the CPU stores values to operate with. Normally, the registers are a lot faster than the RAM - but in my case this module also uses a single KM62256 (instead of single register chips for space reasons) to store the contents of registers A-F. The registers are told to load from, or output to the bus, by the control logic using three control signals.
 
-The stack as well as the register I (12 bit Index-Register used for storing addresses) also reside inside the same SRAM-chip (which is a pretty ugly design choice, but it worked). The Stack-pointer is implemented directly in hardware using a settable counter [74HC193](https://assets.nexperia.com/documents/data-sheet/74HC_HCT193.pdf). The Stack-pointer was implemented as a counter, because this allows for a little quicker execution of `RET` and `CALL` instructions.
-A Multiplexer 74HC157, controls whether the stack-addresses or the register addresses are relayed to the SRAM module. 
+The stack as well as register I (a 12-bit index register used for storing addresses) also reside inside the same SRAM chip (not a pretty design choice, but it worked). The stack pointer is implemented directly in hardware using a settable [74HC193](https://assets.nexperia.com/documents/data-sheet/74HC_HCT193.pdf) counter. Implementing it as a counter allows slightly faster execution of `RET` and `CALL` instructions.
+A 74HC157 multiplexer controls whether stack addresses or register addresses are routed to the SRAM module.
 
 <figure>
   <img class="post-image" src="/assets/images/Chip8/ALUandReg.jpg"  />
@@ -79,24 +79,24 @@ The 12-bit-ALU (12 bits for the same reasons as mentioned in the System-BUS part
 ---
 
 ## Random Number Generator
-This CPU actually uses a hardware-Random number generator. A simple [LFSR](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) would probably have been sufficient, but I decided to try and make a white noise generator which is sampled using a shift register. This analog circuit works well but is pretty sensible to the setting of the potentiometer which sets a decision level (whether the voltage is interpreted as 0 or 1). In hindsight, I would definitely go for a LFSR instead of this circuit.
+This CPU actually uses a hardware random number generator. A simple [LFSR](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) would probably have been sufficient, but I decided to build a white-noise generator sampled by a shift register. This analog circuit works well, but it is quite sensitive to the potentiometer setting that defines the decision threshold (whether a voltage is interpreted as 0 or 1). In hindsight, I would choose an LFSR.
 
 ---
 
 ## Control Logic
-This was probably the most complex part to develop because the instructions of Chip-8 are formatted in a quite impractical way. One instruction always consists out of two bytes. The first 4 bits always indicate the type of operation - but the following 12 bits are quite universally used. Let's say an instruction looks like this: `Txyn` where each letter stands for 4 bits in the instruction. Then n - part is sometimes used to indicate data, but also sometimes details the type of instruction. For example `8xy0` stores the value of register y into register x - but `8xy1` performs a bitwise or operation between the two registers. Another example where `n` is used for data is the instruction `4xkk` which skips the next instruction if the register Vx != kk. The instructions also use many addressing schemes like immediate, direct and index addressing which further complicates decoding. 
+This was probably the most complex part to develop because CHIP-8 instructions are formatted in a fairly impractical way. Each instruction always consists of two bytes. The first 4 bits indicate the instruction type, while the following 12 bits are reused in many different ways. For example, if an instruction is written as `Txyn` (with each letter representing 4 bits), the `n` part sometimes encodes data and sometimes specifies a sub-type of instruction. `8xy0` stores register y into register x, while `8xy1` performs a bitwise OR between those registers. Another data-oriented example is `4xkk`, which skips the next instruction if `Vx != kk`. CHIP-8 also uses several addressing modes (immediate, direct, and index), which further complicates decoding.
 
-These issues were solved by using a few multiplexers and generic logic gates. The result of the "pre-decoding" done by this logic - a 6-bit code corresponding to each instruction, is then fed into four parallel flash memory chips [SST39SF02](https://ww1.microchip.com/downloads/en/DeviceDoc/20005022C.pdf) which store the [microcode](#microcode) of the CPU. The whole CPU uses 31 control signals which are driven by 21 (partly combined) output bits of these memory chips. To keep track of the state of execution for the microcode, we need something similar like a Program-counter. The counter [74HC393](https://www.ti.com/general/docs/suppproductinfo.tsp?distId=26&gotoUrl=http%3A%2F%2Fwww.ti.com%2Flit%2Fgpn%2Fsn74hc393) was used to keep track of the position in the microcode. 
+These issues were solved using a few multiplexers and generic logic gates. The result of this pre-decoding, a 6-bit code corresponding to each instruction, is fed into four parallel flash memory chips [SST39SF02](https://ww1.microchip.com/downloads/en/DeviceDoc/20005022C.pdf) that store the CPU [microcode](#microcode). The whole CPU uses 31 control signals driven by 21 (partly combined) output bits from these memory chips. To track microcode execution state, we need something like a program counter. A [74HC393](https://www.ti.com/general/docs/suppproductinfo.tsp?distId=26&gotoUrl=http%3A%2F%2Fwww.ti.com%2Flit%2Fgpn%2Fsn74hc393) counter is used to track the microcode position.
 
-Because of some, quite hard to implement instructions, this counter was designed to count up to 63. The longest Instructions `Fx65` - "Read registers V0 through Vx from memory starting at location I" (I is the Index-register) and `Fx55` use a whopping **46** microsteps to complete. This is not typical at all - most instructions use somewhere around 7 microsteps (including 2 steps for fetching the instruction). The next section will show how this microcode looks like in my cpu.
+Because of some hard-to-implement instructions, this counter was designed to count up to 63. The longest instructions, `Fx65` (read registers V0 through Vx from memory starting at location I) and `Fx55`, use a whopping **46** microsteps. That is not typical at all; most instructions use around 7 microsteps (including 2 fetch steps). The next section shows what this microcode looks like in my CPU.
 <figure>
   <img class="post-image" src="/assets/images/Chip8/ControlBitsAndRNG.jpg"  />
   <figcaption>The state of all control-signals is indicated with LED's </figcaption>
 </figure>
 
 ### Microcode
-The microcode is used by the control logic to tell the modules what to do - step by step. We are going to look at an example instruction `8xy4` - "Add Registers x and y". 
-Typically, a CPU follows a [fetch-decode-execute-cycle](https://en.wikipedia.org/wiki/Instruction_cycle) - my CPU does so too. The steps needed to be taken by my CPU to execute the addition instruction, are the following:
+Microcode is used by the control logic to tell each module what to do, step by step. Let us look at an example instruction, `8xy4` (add registers x and y).
+Like most CPUs, this one follows a [fetch-decode-execute cycle](https://en.wikipedia.org/wiki/Instruction_cycle). The steps required for this addition instruction are:
 1. Load first Instruction Byte
 2. Load second Instruction Byte - now the instruction is fully loaded and can be decoded
 3. Load Register x into ALU Register A (via system-bus)
@@ -106,9 +106,9 @@ Typically, a CPU follows a [fetch-decode-execute-cycle](https://en.wikipedia.org
 7. Done (start from step 1 and load next instruction)
 
 #### Creating Microcode
-To create the microcode I wrote a small Java application to transform a pretty basic notation of actions to memory maps for each of the four flash memories. It does not check if two actions are valid and simply sets the corresponding bits for each address.
+To create the microcode, I wrote a small Java application that transforms a basic action notation into memory maps for each of the four flash chips. It does not validate whether two actions conflict; it simply sets the corresponding bits for each address.
 
-The actual microcode I wrote for the Instruction described in [Microcode](#microcode) looks like this:
+The actual microcode for the instruction described in [Microcode](#microcode) looks like this:
 ```
 //Vx + Vy , VF= Carry
 x x 0: RAM	OEL	DEC	LDH	RB	LDL	PC	CNT //RAM outputs to BUS, Decoder High Register Loads, Program Counter is Incremented
@@ -145,7 +145,7 @@ This instruction takes 26 steps because it needs to push up to 15 bytes to the G
 2. x-position
 3. y-position
 4. Up to 15 bytes containing the displayed data
-5. If a bit cancelLED a one to a zero in GPU-memory (because the bytes are written using XOR) this is noticed by the GPU and a signal goes high. That signas is received by CPU and a flag is set.
+5. If a bit changes from one to zero in GPU memory (because bytes are written using XOR), the GPU detects this and raises a signal. That signal is received by the CPU and a flag is set.
 
 #### CPU Microcode for drawing to the display 
 ```
@@ -184,4 +184,4 @@ The memory contents are continuously drawn to the LED-matrix display. This is qu
 Controlling the process of multiplexing and PWM is handled by a [Finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine).
 
 # Results
-I was able to run games such as Tetris, Pong and some awesome games from the [Octojam](https://itch.io/jam/octojam-7). All in all I am very happy with the results and think the project was an awesome learning experience. If there were a second iteration I knew many things which I would approach differently, and I know what I would keep. If I had to set an approximate price tag for all components I would say that it cost around 300€ - which is not too bad in my opinion.
+I was able to run games such as Tetris, Pong, and some great games from the [Octojam](https://itch.io/jam/octojam-7). Overall, I am very happy with the result and think the project was an awesome learning experience. If I built a second iteration, there are many things I would approach differently, and some things I would keep. The total component cost was around 300 EUR, which is not too bad in my opinion.

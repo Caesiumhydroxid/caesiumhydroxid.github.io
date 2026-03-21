@@ -9,20 +9,22 @@ tags:
 
 # Functionality
 
-This project is a clock and display made out of an old LAWO [flipdot-display](https://en.wikipedia.org/wiki/Flip-disc_display). It is able to display time, weather and departures of public transport near the place I live.
+This project is a clock and information display built from an old LAWO [flip-dot display](https://en.wikipedia.org/wiki/Flip-disc_display). It can show the time, weather, and nearby public transport departures.
 
 ***
 
 # Flipdot-display
 
-A flipdot-display is using small magnetic disks which are black on one side and yellow on the other side. Small coils are driven in such a way, that these magnetic discs filp and stay (even if powered off). In this regard it behaves like an e-ink display. To magnetize the core of the coils to further flip the disk a small pulsed current is applied to the coils. The drive board consisting of basically an ATMEGA8 + ULN2803, UDN2983 and Linedecoders are developed at home. The software running on the ATMEGA8 receives data over the serial port and updates changed pixels for most efficient speed. Additionally, every n seconds each pixel is pulsed in order to prevent sticking of pixels.
+A flip-dot display uses small magnetic disks that are black on one side and yellow on the other. Small coils are driven so the dots flip and then stay in position, even when power is removed. In that way, it behaves similarly to an e-ink display. A short current pulse magnetizes the coil core and flips each dot.
+
+I designed the driver board at home. It is based on an ATmega8, a ULN2803, a UDN2983, and line decoders. The firmware on the ATmega8 receives data over serial and only updates changed pixels for speed. In addition, every pixel is pulsed periodically to reduce sticking.
 
 <figure>
   <img class="post-image" src="/assets/images/FlipdotClockDriver.jpg" />
   <figcaption>Display Driver Board</figcaption>
 </figure>
 
-I cannot fully remember why I decided to use that many negative output linedecoders and inverters when I just could have used 74HC237 - but I think the reseller did not have these in stock and I wanted to get everything done quickly. As the size of the pcb did not matter to me I probably just did not care.
+I cannot fully remember why I used so many negative-output line decoders and inverters instead of a 74HC237. I think the reseller did not have them in stock and I wanted to finish quickly. Since PCB size did not matter for this project, I probably did not optimize that part very much.
 
 [Eagle PCB and Schematics files](/assets/files/DriverCircuit.zip)
 
@@ -33,18 +35,18 @@ I cannot fully remember why I decided to use that many negative output linedecod
   <figcaption>Inside the whole assembly</figcaption>
 </figure>
 
-The Raspberry handles all internet connectivity and display logic. The time is automatically fetched via NTP. It also featured speech recognition based on [Snips AI](https://snips.ai/). Unfortunately this project is now acquired by Sonos - and stopped support for makers. When I can make time for it, I will change the speech recognition to another open source project.
+The Raspberry Pi handles internet connectivity and display logic. Time is synchronized automatically via NTP. It also used to support speech recognition through [Snips AI](https://snips.ai/). Unfortunately, Snips was acquired by Sonos and support for makers was discontinued. When I find the time, I plan to migrate speech recognition to another open-source project.
 
-Using commands like: "Snips - show Weather" the clock is able to be controlled by voice. 
+Using commands like "Snips, show weather", the clock can be controlled by voice.
 
-Possible Screens which are implemented by now are:
+Currently implemented screens are:
 * Time
 * Weather
 * Departures at local public transport stations
 
 
 ## Games
-It was also possible to play Games such as Pong and Snake on the clock. Unfortunately an old SD Card broke and the files from the controller where lost. It which was based on the [Node-virtual gamepads Project](https://github.com/jehervy/node-virtual-gamepads). My version just modified the protocol a little bit to fit my needs better.
+It was also possible to play games like Pong and Snake on the display. Unfortunately, an old SD card failed and the controller files were lost. The controller setup was based on the [Node virtual gamepads project](https://github.com/jehervy/node-virtual-gamepads), with a slightly modified protocol to better fit my needs.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/A8e0DPhJKU4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block;" allowfullscreen></iframe>
 

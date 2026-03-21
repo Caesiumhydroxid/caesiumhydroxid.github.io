@@ -7,7 +7,7 @@ description: A game about life and death
 ---
 # Description
 
-This game was *not* meant to be a conventional computer game and is best seen as an experiment for two people. It has won the *Golden Nica* in the Category "u19 - create your world" at the [Prix Ars Electronica](https://en.wikipedia.org/wiki/Prix_Ars_Electronica) contest. 
+This game was *not* intended to be a conventional video game and is best understood as a two-player experiment. It won the *Golden Nica* in the category "u19 - create your world" at the [Prix Ars Electronica](https://en.wikipedia.org/wiki/Prix_Ars_Electronica).
 
 # Plot
 
@@ -17,23 +17,23 @@ Player 1 acts out the life of a man who’s been diagnosed with cancer. The cour
 
 Player 2 simulates the cancer itself in that he can determine the decisive characteristics of the cancer cells. At the outset, he’s assigned the task of killing the Subject (as Player 1 is referred to). But over the course of the game, he receives information about events in the life of the man afflicted with cancer. Thus, he is repeatedly made aware of the fact that, through his actions, he influences the life of a human being. At the game’s climax, he has to decide whether to kill the Subject or not.
 
-The idea behind this game is based in part on the Milgram Experiment in which participants were called upon to carry out ethically dubious assignments. Although they were cognizant of the fact that they were causing a human being to suffer, they obeyed the instructions they received without considering the consequences.
+The idea behind this game is partly based on the Milgram experiment, in which participants were asked to carry out ethically questionable tasks. Although they were aware that another person was suffering, they still followed instructions without fully considering the consequences.
 
 In many computer games, players have to perform tasks without giving any further thought to them. At the end of this game, both players are prompted to reflect upon the decisions they made.
 
 # Technicals
 
-This game was developed in *Java* using the engines [LibGdx](https://libgdx.com/) and [KryoNet](https://github.com/EsotericSoftware/kryonet) which are amazing to work with. The pixelart was created with [PyxelEdit](https://pyxeledit.com/) and [Paint.Net](https://www.getpaint.net/).
+This game was developed in *Java* using [LibGdx](https://libgdx.com/) and [KryoNet](https://github.com/EsotericSoftware/kryonet), both of which were great to work with. The pixel art was created with [PyxelEdit](https://pyxeledit.com/) and [Paint.NET](https://www.getpaint.net/).
 
 # Resources
-Since this project received some media attention I like to link to some Interviews and articles which covered this project - unfortunately almost all of them are in german.
+Since this project received some media attention, I would like to link a few interviews and articles about it. Unfortunately, almost all of them are in German.
 
 * [Ars Electronica Archive](https://archive.aec.at/prix/showmode/55496/)
 * [Ars Electronica Blog](https://ars.electronica.art/aeblog/de/2016/08/26/die-entscheidung/)
 * ["Der Standard" News Article](https://www.derstandard.at/story/2000036720166/die-entscheidung-17-jaehriger-linzer-beeindruckt-mit-krebs-videospiel)
 * [Youtube Video of Jurors talking about my Game](https://www.youtube.com/watch?v=rrY7_WwP7v8W)
 
-It was a great honor to be a part of the Festival and an amazing experience. I like to thank everyone involved!
+It was a great honor to be part of the festival, and an amazing experience overall. I would like to thank everyone involved.
 
 
 <div class="tile is-ancestor">
