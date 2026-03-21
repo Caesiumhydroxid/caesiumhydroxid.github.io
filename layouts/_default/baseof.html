@@ -3,7 +3,7 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body{{ if .IsHome }} class="home-page"{{ end }}>
   {{ if not .Params.hide_nav }}
     {{ partial "navbar.html" . }}
   {{ end }}

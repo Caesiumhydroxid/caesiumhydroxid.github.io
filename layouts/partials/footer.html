@@ -6,7 +6,7 @@
 
   <div id="backtotopback">
     <div class="container has-text-centered has-background-grey-darker" id="backtotop">
-      <a class="has-text-white" onclick="window.scroll(0,0)">BACK TO TOP</a>
+      <a class="has-text-white" href="#" id="backtotop-link">BACK TO TOP</a>
     </div>
   </div>
 
@@ -49,4 +49,25 @@
     by <a href="https://www.twitter.com/thedevslot" target="_blank" rel="noopener noreferrer">TheDevsLot</a>
     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var backToTop = document.getElementById('backtotop-link');
+      if (!backToTop) return;
+
+      backToTop.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        if (typeof window.scrollTo === 'function') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        if (document.documentElement) {
+          document.documentElement.scrollTop = 0;
+        }
+        if (document.body) {
+          document.body.scrollTop = 0;
+        }
+      });
+    });
+  </script>
 </footer>

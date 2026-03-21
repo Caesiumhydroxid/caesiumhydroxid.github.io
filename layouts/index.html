@@ -88,35 +88,23 @@
         </div>
         <div class="column has-text-left-desktop has-text-left-tablet has-text-left-fullhd has-text-left-widescreen">
           <p>{{ .Site.Params.author_about | safeHTML }}</p>
-          <br>
+          <div style="height:0.35rem;"></div>
           <div class="columns is-centered">
             <div>
-              <a href="/#contact" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined">Contact Me</a>
-            </div>
-            <div>
-              <a href="/blog/" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined">Projects</a>
+              <a href="/contact/" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:0.35rem;vertical-align:text-bottom;"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>Send me a Message</a>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="hero is-fullheight has-text-centered" id="contact">
-  <div class="hero-body">
-    <div class="container">
+      <hr style="margin:0.6rem auto;">
+      <div class="container" id="contact-links">
       {{ with .Site.Params.facebook_username }}
       <a id="contact-button" href="https://m.me/{{ . }}" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-facebook-messenger"></i>Ping me on Messenger
       </a>
       {{ end }}
-
-      <a id="contact-button" href="/contact/" class="button is-rounded is-uppercase has-text-weight-normal is-black is-outlined has-text-weight-semibold column is-two-fifths" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:0.35rem;vertical-align:text-bottom;"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>Send me a Message
-      </a>
-
-      <hr>
+      <hr style="margin:0.45rem auto;">
       <h3 class="is-size-5 is-uppercase has-text-weight-semibold has-text-black is-marginless">You Can find me here</h3>
       <div class="column is-full is-size-3">
         {{ with .Site.Params.facebook_username }}<a href="https://www.facebook.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black">Facebook</a>{{ end }}
@@ -129,18 +117,248 @@
         {{ with .Site.Params.dribbble_username }}<a href="https://www.dribbble.com/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black">Dribbble</a>{{ end }}
         {{ with .Site.Params.spotify_username }}<a href="https://open.spotify.com/user/{{ . }}" target="_blank" rel="noopener noreferrer" class="has-text-black">Spotify</a>{{ end }}
       </div>
-    </div>
+      </div>
   </div>
 </section>
 
 <script>
+  (function () {
+    var hero = document.getElementById('hero-main');
+    var project = document.getElementById('project');
+    if (!hero) return;
+
+    var heroSnapLock = false;
+    var heroSnapConsumed = false;
+    var settleSnapLock = false;
+    var settleTimer = null;
+    var SNAP_DEBUG = true;
+    var lastDirection = 0;
+    var lastScrollTop = 0;
+    var touchStartY = 0;
+    var touchStartTop = 0;
+    var touchActive = false;
+    var settleSections = ['project', 'publications', 'about']
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+
+    function snapLog(reason, data) {
+      if (!SNAP_DEBUG) return;
+      console.log('[settle-snap]', reason, data || {});
+    }
+
+    function getScrollTop() {
+      return Math.max(
+        typeof window.scrollY === 'number' ? window.scrollY : 0,
+        document.documentElement ? document.documentElement.scrollTop : 0,
+        document.body ? document.body.scrollTop : 0
+      );
+    }
+
+    function isEligibleSection(section) {
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top <= vh * 0.68 && rect.bottom >= vh * 0.22;
+    }
+
+    function maybeSettleSnap(forceTouch) {
+      if (window.innerWidth < 769 && !forceTouch) {
+        snapLog('skip:mobile-width', { width: window.innerWidth });
+        return;
+      }
+      if (heroSnapLock || settleSnapLock) {
+        snapLog('skip:lock-active', { heroSnapLock: heroSnapLock, settleSnapLock: settleSnapLock });
+        return;
+      }
+      if (getScrollTop() <= 2) {
+        snapLog('skip:near-top', { scrollY: getScrollTop() });
+        return;
+      }
+      if (!settleSections.length) {
+        snapLog('skip:no-sections');
+        return;
+      }
+
+      var top = getScrollTop();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var bestSection = null;
+      var nearestDist = Number.POSITIVE_INFINITY;
+      var candidates = [];
+
+      settleSections.forEach(function (section) {
+        var rect = section.getBoundingClientRect();
+        var eligible = isEligibleSection(section);
+        var sectionTop = Math.max(0, section.offsetTop - 52);
+        var dist = Math.abs(top - sectionTop);
+        var containsMiddle = rect.top <= vh * 0.5 && rect.bottom >= vh * 0.5;
+        var isTall = rect.height > vh * 1.05;
+
+        var delta = sectionTop - top;
+
+        candidates.push({
+          id: section.id,
+          eligible: eligible,
+          delta: Math.round(delta),
+          dist: Math.round(dist),
+          tall: isTall,
+          top: Math.round(rect.top),
+          bottom: Math.round(rect.bottom)
+        });
+
+        if (!eligible) return;
+        if (lastDirection > 0 && delta <= 20) return;
+        if (lastDirection < 0 && delta >= -20) return;
+        if (lastDirection < 0 && containsMiddle && isTall) return;
+
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          bestSection = section;
+        }
+      });
+
+      snapLog('evaluate', { scrollY: Math.round(top), direction: lastDirection, candidates: candidates });
+
+      if (!bestSection) {
+        snapLog('skip:no-direction-candidate', { direction: lastDirection });
+        return;
+      }
+
+      var bestHeight = bestSection.offsetHeight || 0;
+      var useEndAlignment = lastDirection < 0;
+      var snapBlock = useEndAlignment ? 'end' : 'start';
+      var target = useEndAlignment
+        ? Math.max(0, bestSection.offsetTop + bestHeight - vh)
+        : Math.max(0, bestSection.offsetTop - 52);
+
+      if (Math.abs(top - target) < 14) {
+        snapLog('skip:already-aligned', { section: bestSection.id, target: Math.round(target), scrollY: Math.round(top), block: snapBlock });
+        return;
+      }
+
+      settleSnapLock = true;
+      snapLog('snap', { section: bestSection.id, target: Math.round(target), dist: Math.round(Math.abs(top - target)), block: snapBlock });
+      bestSection.scrollIntoView({ behavior: 'smooth', block: snapBlock });
+      window.setTimeout(function () {
+        settleSnapLock = false;
+        snapLog('unlock', { scrollY: Math.round(getScrollTop()) });
+      }, 360);
+    }
+
+    function scheduleSettle(reason, forceTouch) {
+      if (window.innerWidth < 769 && !forceTouch) return;
+      if (settleTimer) {
+        window.clearTimeout(settleTimer);
+      }
+      snapLog('schedule', { reason: reason, scrollY: Math.round(getScrollTop()), forceTouch: !!forceTouch });
+      settleTimer = window.setTimeout(function () {
+        snapLog('run', { reason: reason, scrollY: Math.round(getScrollTop()) });
+        maybeSettleSnap(!!forceTouch);
+      }, 90);
+    }
+
+    function triggerHeroSnap(source) {
+      if (!project) return false;
+      if (heroSnapLock || heroSnapConsumed) return false;
+      if (getScrollTop() > 8) return false;
+
+      heroSnapLock = true;
+      heroSnapConsumed = true;
+      snapLog('hero-snap', { target: 'project', source: source });
+      project.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      window.setTimeout(function () {
+        heroSnapLock = false;
+        scheduleSettle('hero-unlock', source === 'touch');
+      }, 480);
+      return true;
+    }
+
+    hero.addEventListener('mousemove', function (event) {
+      var rect = hero.getBoundingClientRect();
+      var x = ((event.clientX - rect.left) / rect.width) * 100;
+      var y = ((event.clientY - rect.top) / rect.height) * 100;
+      hero.style.setProperty('--pointer-x', x + '%');
+      hero.style.setProperty('--pointer-y', y + '%');
+    });
+
+    window.addEventListener('wheel', function (event) {
+      if (!project) return;
+      if (window.innerWidth < 769) return;
+      if (event.deltaY <= 0) {
+        lastDirection = -1;
+        scheduleSettle('wheel-up');
+        return;
+      }
+      lastDirection = 1;
+      if (heroSnapLock || heroSnapConsumed || getScrollTop() > 8) {
+        scheduleSettle('wheel-down-after-hero');
+        return;
+      }
+
+      event.preventDefault();
+      triggerHeroSnap('wheel');
+    }, { passive: false });
+
+    window.addEventListener('touchstart', function (event) {
+      if (!event.touches || event.touches.length !== 1) return;
+      touchActive = true;
+      touchStartY = event.touches[0].clientY;
+      touchStartTop = getScrollTop();
+    }, { passive: true });
+
+    window.addEventListener('touchend', function (event) {
+      if (!touchActive) return;
+      touchActive = false;
+
+      var endY = touchStartY;
+      if (event.changedTouches && event.changedTouches.length) {
+        endY = event.changedTouches[0].clientY;
+      }
+
+      var swipe = touchStartY - endY;
+      if (Math.abs(swipe) < 18) {
+        scheduleSettle('touch-tap', true);
+        return;
+      }
+
+      if (swipe > 0) {
+        lastDirection = 1;
+        if (touchStartTop <= 8) {
+          triggerHeroSnap('touch');
+          return;
+        }
+        scheduleSettle('touch-swipe-up', true);
+        return;
+      }
+
+      lastDirection = -1;
+      scheduleSettle('touch-swipe-down', true);
+    }, { passive: true });
+
+    window.addEventListener('scroll', function () {
+      var currentTop = getScrollTop();
+      if (currentTop > lastScrollTop + 1) {
+        lastDirection = 1;
+      } else if (currentTop < lastScrollTop - 1) {
+        lastDirection = -1;
+      }
+      lastScrollTop = currentTop;
+
+      if (currentTop <= 2) {
+        heroSnapConsumed = false;
+      }
+
+      if (window.innerWidth >= 769) {
+        scheduleSettle('scroll');
+      }
+    }, { passive: true });
+  })();
+
   window.addEventListener("scroll", function () {
     var scroll = this.scrollY;
     var navMap = [
       { id: 'project', href: '/#project' },
       { id: 'publications', href: '/#publications' },
-      { id: 'about', href: '/#about' },
-      { id: 'contact', href: '/#contact' }
+      { id: 'about', href: '/#about' }
     ];
 
     var items = document.querySelectorAll('.navbar-end .navbar-item');

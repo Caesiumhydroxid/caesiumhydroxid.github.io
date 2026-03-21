@@ -28,4 +28,78 @@
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    var hero = document.getElementById('hero');
+    var post = document.getElementById('post');
+    if (!hero || !post) return;
+
+    var snapLock = false;
+    var snapConsumed = false;
+    var touchStartY = 0;
+    var touchStartTop = 0;
+    var touchActive = false;
+
+    function getScrollTop() {
+      return Math.max(
+        typeof window.scrollY === 'number' ? window.scrollY : 0,
+        document.documentElement ? document.documentElement.scrollTop : 0,
+        document.body ? document.body.scrollTop : 0
+      );
+    }
+
+    function triggerPostSnap() {
+      if (snapLock || snapConsumed) return false;
+      if (getScrollTop() > 8) return false;
+
+      snapLock = true;
+      snapConsumed = true;
+      post.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      window.setTimeout(function () {
+        snapLock = false;
+      }, 480);
+      return true;
+    }
+
+    window.addEventListener('wheel', function (event) {
+      if (window.innerWidth < 769) return;
+      if (event.deltaY <= 0) return;
+      if (snapLock || snapConsumed) return;
+      if (getScrollTop() > 8) return;
+
+      event.preventDefault();
+      triggerPostSnap();
+    }, { passive: false });
+
+    window.addEventListener('touchstart', function (event) {
+      if (!event.touches || event.touches.length !== 1) return;
+      touchActive = true;
+      touchStartY = event.touches[0].clientY;
+      touchStartTop = getScrollTop();
+    }, { passive: true });
+
+    window.addEventListener('touchend', function (event) {
+      if (!touchActive) return;
+      touchActive = false;
+
+      var endY = touchStartY;
+      if (event.changedTouches && event.changedTouches.length) {
+        endY = event.changedTouches[0].clientY;
+      }
+
+      var swipe = touchStartY - endY;
+      if (swipe > 18 && touchStartTop <= 8) {
+        triggerPostSnap();
+      }
+    }, { passive: true });
+
+    window.addEventListener('scroll', function () {
+      if (getScrollTop() <= 2) {
+        snapConsumed = false;
+      }
+    }, { passive: true });
+  })();
+</script>
 {{ end }}
