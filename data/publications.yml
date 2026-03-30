@@ -8,11 +8,12 @@ items:
     year: 2026
     
   - title: "Lean on Vampire proofs (Short Paper)"
-    authors: "B.J, A.P, M.R, M.H, L.K"
+    authors: "Jonas Bodingbauer, Márton Hajdu, Laura Kovács, Axel Polaczek, Michael Rawson"
     venue: "In review"
     type: "Paper"
     status: "In Review"
     year: 2026
+    preprint: "https://doi.org/10.48550/arXiv.2603.26342"
 
   - title: "First-principles screening of fluoride-based compounds for next-generation ultrathin gate dielectrics"
     authors: "B.J, D.W, C.W, T.G"
