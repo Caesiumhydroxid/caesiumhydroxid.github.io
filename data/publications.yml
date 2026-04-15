@@ -6,6 +6,7 @@ items:
     status: "In Preparation"
     supervisor: "Laura Kovacs"
     year: 2026
+    presentation: "/files/vampire-can-lean-into-trust.html"
     
   - title: "Lean on Vampire proofs (Short Paper)"
     authors: "Jonas Bodingbauer, Márton Hajdu, Laura Kovács, Axel Polaczek, Michael Rawson"
